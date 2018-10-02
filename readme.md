@@ -17,7 +17,7 @@
     $ acv -h
     ```
 
-When successfully installed, you will be able to execute `acv -h`. This command will create the working directory "~/acvtool" and the configuration file "~/acvtool/config.json". 
+When successfully installed, you will be able to execute `acv -h`. This command will create the working directory "\~/acvtool" and the configuration file "\~/acvtool/config.json". 
 
 2. Specify absolute paths to the Android tools at "~/acvtool/config.json" (%userprofile%\acvtool\config.json in Windows) for the following variables.
     * AAPT
@@ -95,7 +95,7 @@ Generate coverage report after tesing of apk:
     ```
 
     ```shell
-    $ emulator -avd [device-name] &
+    $ emulator -avd [device-name] 
     ```
 
 2. Install the instrumented APK in the Android emulator or device:
