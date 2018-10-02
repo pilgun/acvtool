@@ -1,0 +1,6 @@
+{
+  "AAPT": "aapt_path",
+  "ZIPALIGN": "zipalign_path",
+  "ADB": "adb_path",
+  "APKSIGNER": "apksigner_path"
+}

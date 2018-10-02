@@ -1,0 +1,103 @@
+span.cov {
+    background-color: #cddab9;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: #eee;
+}
+
+ul.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+}
+
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: "\003e";
+}
+
+ul.breadcrumb li a, table a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+ul.breadcrumb li a:hover, table a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
+
+.left-margin {
+    margin-left: 12px;
+}
+
+.ico {
+    width: 24px;
+    height: 24px;
+    display: inherit;
+    padding-left: 28px;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.ico-android {
+    background-image: url(android.png);
+}
+
+.ico-package {
+    background-image: url(box.png);
+}
+
+.ico-class {
+    background-image: url(file.png);
+}
+
+.ico-doc {
+    background-image: url(document.png);
+}
+
+table, th, td {
+    border: 1px solid #dddddd;
+    border-collapse: collapse;
+
+}
+
+table thead td {
+    background-color: #06050530;
+    padding: 6px 0px;
+}
+table tfoot td {
+    padding: 6px 0px;
+}
+
+th, td {
+    padding: 0px 6px;
+    text-align: center;
+}
+
+table tr:hover {
+    background-color: #f5f5f5;
+}
+
+table thead tr:hover {
+    background-color: #06050530;
+}
+
+tr td:nth-child(2) { 
+    text-align: left;
+}
+
+.left {
+    float: left;
+}
+
+.footer {
+    padding: 26px 12px;
+}

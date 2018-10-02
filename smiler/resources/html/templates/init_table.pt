@@ -1,0 +1,38 @@
+<table>
+    <col align="left"/>
+    <col align="left"/>
+    <col align="left"/>
+    <col align="center"/>
+    <col align="center"/>
+    <col align="center"/>
+    <col align="center"/>
+    <thead>
+        <tr>
+            <td>Element</td>
+            <td>Ratio</td>
+            <td>Cov.</td>
+            <td>Missed</td>
+            <td>Lines</td>
+            <td>Missed</td>
+            <td>Methods</td>
+            <td>Missed</td>
+            <td>Classes</td>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td>Total</td>
+            <td>${progress_covered} of ${progress_all}</td>
+            <td>${total_coverage}</td>
+            <td tal:condition="is_instruction_level">${total_coverage_data.lines_missed}</td>
+            <td tal:condition="is_instruction_level">${total_coverage_data.lines}</td>
+            <td>${total_coverage_data.methods_missed}</td>
+            <td>${total_coverage_data.methods}</td>
+			<td>${total_coverage_data.classes_missed}</td>
+            <td>${total_coverage_data.classes}</td>
+        </tr>
+    </tfoot>
+    <tbody>
+		${rows}
+    </tbody>
+</table>

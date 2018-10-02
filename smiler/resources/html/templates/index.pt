@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<link rel="stylesheet" href="${respath}.resources/report.css" />
+</head>
+<body>
+    <ul class="breadcrumb">
+        <li><i class="ico ico-android"></i><a href="${respath}index.html">${appname}</a></li>
+        <li tal:condition="package"><i class="ico ico-package"></i>${package}</li>
+        <li tal:condition="file_name">${file_name}</li>
+    </ul>
+	
+    <p class="left-margin">granularity level: ${granularity}</p>
+	
+	${table}
+    
+	<div class="footer"><span class="left">Created with <a href="https://github.com/pilgun/acvtool">ACVTool</a> 0.1</span></div>
+
+	<script type="text/javascript" src="${respath}.resources/index.js"></script>
+</body>
+</html>

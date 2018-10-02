@@ -1,0 +1,17 @@
+<tr>
+    <td id="a0"><a href="${elementlink}" class="ico ico-${type}">${elementname}</a></td>
+    <td class="bar" id="b0">
+		<img src="${respath}.resources/redbar.png" class="redbar" width="${progress_missed}" height="10" 
+			title="${progress_missed}" alt="${progress_missed}">
+		<img src="${respath}.resources/greenbar.png" class="greenbar" width="${progress_covered}" height="10" 
+			title="${progress_covered}" alt="${progress_covered}">
+	</td>
+		
+    <td >${coverage}</td>
+    <td tal:condition="is_instruction_level">${coverage_data.lines_missed}</td>
+    <td tal:condition="is_instruction_level">${coverage_data.lines}</td>
+    <td>${coverage_data.methods_missed}</td>
+    <td>${coverage_data.methods}</td>
+    <td>${coverage_data.classes_missed}</td>
+    <td>${coverage_data.classes}</td>
+</tr>
