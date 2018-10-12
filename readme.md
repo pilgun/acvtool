@@ -2,6 +2,8 @@
 
 `acvtool.py` instruments Android apk and produces its code coverage without original source code. Code coverage is based on Smali representation of the bytecode.
 
+[Demonstration video of ACVTool](https://www.youtube.com/watch?v=xyaR4Ivrij0).
+
 ## Prerequisites
 1. `Windows`/`OSX`/`Ubuntu`.
 3. `Java` version `1.8`.
