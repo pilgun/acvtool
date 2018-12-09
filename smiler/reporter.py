@@ -15,8 +15,11 @@ from chameleon import PageTemplateLoader
 from chameleon.utils import Markup
 from instrumenting.utils import Utils as Utils2
 from serialisation.xml_serialiser import XmlSerialiser
+import re
 
 COV_CLASS = 'cov' #html class, ex: '<span class="%COV_CLASS%"/>'
+EXEC_CLASS = 'exec'
+not_instr_regex = re.compile("^(move-result|move-exception).*$")
 
 def generate(package, pickle_path, output_dir, ec_dir=None, xml=True, html=True, granularity="instruction"):
     report_dir = os.path.join(output_dir, package, 'report')
@@ -166,6 +169,14 @@ def span_tab_tag(txt, cl=''):
 def span_tag(txt, cl=""):
     return '<span class="{}">{}</span>'.format(cl, txt)
 
+def get_first_lbl_by_index(lables, index):
+    i = 0
+    while i < len(lables) and lables[i].index < index:
+        i += 1
+    if i < len(lables) and lables[i].index == index:
+        return lables[i]
+    return None
+
 def save_class(cl, class_template, output_dir, app_name, granularity):
     dir = os.path.join(output_dir, cl.folder)
     if not os.path.exists(dir):
@@ -179,16 +190,29 @@ def save_class(cl, class_template, output_dir, app_name, granularity):
     buf.append(LI_TAG(''))
     for m in cl.methods:
         ins_buf = []
-        for ins in m.insns:
+        labels = m.labels.values()
+        labels = sorted(labels, key=attrgetter('index'))
+        for i in range(len(m.insns)):
+            ins = m.insns[i]
             if ins.covered:
                 ins_buf.append(span_tab_tag(ins.buf, COV_CLASS))
             else:
-                ins_buf.append(span_tab_tag(ins.buf))
+                if ins.buf.startswith("return"):
+                    lbl = get_first_lbl_by_index(labels, i)
+                    if lbl is not None:
+                        if lbl.covered:
+                            ins_buf.append(span_tab_tag(ins.buf, EXEC_CLASS))
+                    else:
+                        if m.insns[i-1].covered:
+                            ins_buf.append(span_tab_tag(ins.buf, EXEC_CLASS))
+                else:
+                    if i<len(m.insns)-1 and m.insns[i+1].covered and not_instr_regex.match(m.insns[i+1].buf):
+                        ins_buf.append(span_tab_tag(ins.buf, EXEC_CLASS))
+                    else:
+                        ins_buf.append(span_tab_tag(ins.buf))
         # insert labels and tries
         # sort the labels by index
         count = 0
-        labels = m.labels.values()
-        labels = sorted(labels, key=attrgetter('index'))
         for l in labels:
             if l.covered:
                 ins_buf.insert(l.index + count, span_tab_tag(l.buf, COV_CLASS))

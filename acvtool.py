@@ -48,7 +48,8 @@ def run_actions(parser, args=None):
             dbg_start=args.dbg_start,
             dbg_end=args.dbg_end,
             installation=args.install or args.report,
-            granularity=args.granularity)
+            granularity=args.granularity,
+            mem_stats=args.memstats)
         if args.report:
             smiler.start_instrumenting(package,
                 onstop=lambda: reporter.generate(
@@ -131,6 +132,9 @@ def get_parser():
     parser_instrument.add_argument("-t", "--timeout", metavar="<timeout>", required=False,
             help="Waiting time for coverage file preparing.",
             default=config.default_onstop_timeout)
+    parser_instrument.add_argument("-ms", "--memstats", metavar="<memstats>", required=False,
+            help="How many bytes acvtool allocated for tracking.['single', 'verbose']", 
+            choices=["single", "verbose"], default=None)
     parser_instrument.add_argument("-d", "--device", metavar="<device>", required=False,
             help="The name of adb device/emulator.", default=None, dest="device")
     

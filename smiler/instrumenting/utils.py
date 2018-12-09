@@ -88,6 +88,18 @@ class Utils(object):
             else:
                 if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
                     shutil.copy2(s, d)
+
+    @staticmethod
+    def log_entry(log_path, entry, sep=','):
+        if not os.path.exists(log_path):
+            with open(log_path, 'w') as log_file:
+                log_file.write("sep={}\n".format(sep))
+                log_file.flush()
+        with open(log_path, 'a+') as log_file:
+            log_file.write(entry)
+            log_file.flush()
+
+
 def timeit(method):
     '''Measures the working time of the method.'''
     def wrapper(*args, **kwargs):
@@ -95,15 +107,8 @@ def timeit(method):
         result = method(*args, **kwargs)
         end = time()
         time_log_path = os.path.join("times_log.csv")
-        if not os.path.exists(time_log_path):
-            with open(time_log_path, 'w') as times_log_file:
-                times_log_file.write("sep=;\n")
-                times_log_file.flush()
-
-        with open(time_log_path, 'a+') as times_log_file:
-            args_str = ";".join(map(str,args))
-            times_log_file.write("{0};{1};{2};{3}\n".format(datetime.now(), 
-                end - start, method.__name__.lower(), args_str))
-            times_log_file.flush()
+        args_str = ";".join(map(str,args))
+        entry = "{0};{1};{2};{3}\n".format(datetime.now(), end - start, method.__name__.lower(), args_str)
+        Utils.log_entry(time_log_path, entry, sep=";")
         return result
     return wrapper

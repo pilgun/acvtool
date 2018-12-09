@@ -2,6 +2,15 @@ span.cov {
     background-color: #cddab9;
 }
 
+span.exec {
+    background-color: #e6eac3;
+}
+
+body, td {
+    font-family: sans-serif;
+    font-size: 10pt;
+}
+
 h1 {
     font-weight: bold;
     font-size: 18pt;
@@ -45,6 +54,7 @@ ul.breadcrumb li a:hover, table a:hover {
     padding-left: 28px;
     background-repeat: no-repeat;
     background-position: left center;
+    vertical-align: middle;
 }
 
 .ico-android {
@@ -71,7 +81,7 @@ table, th, td {
 
 table thead td {
     background-color: #06050530;
-    padding: 6px 0px;
+    padding: 6px 6px;
 }
 table tfoot td {
     padding: 6px 0px;

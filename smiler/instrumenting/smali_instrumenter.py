@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import shutil
+import logging
 import cPickle as pickle
 from apkil.smalitree import SmaliTree
 from apkil.insnnode import InsnNode
@@ -18,15 +19,17 @@ class Instrumenter(object):
     dir_path = sys.path[0]
     instrumentation_smali_path = resource_filename('smiler.resources.instrumentation', 'smali')
 
-    def __init__(self, smalitree, granularity, dbg_start=None, dbg_end=None):
+    def __init__(self, smalitree, granularity, package, dbg_start=None, dbg_end=None, mem_stats=None):
         self.smalitree = smalitree
         self.granularity = Granularity.GRANULARITIES[granularity]
         self.insns = []
         self.class_traces = []
+        self.package = package
         self.dbg = dbg_start is not None
         self.dbg_start = dbg_start
         self.dbg_end = dbg_end
-        
+        self.mem_stats = mem_stats
+
     def instrument(self):
         '''Generates tracking code for evry smali instruction and label.'''
         print('instrumenting')
@@ -55,7 +58,7 @@ class Instrumenter(object):
                 dbg_start=self.dbg_start, 
                 dbg_end=self.dbg_end)
             if dbg_instrument and is_instrumented:
-                classes_info.append((class_.name, cover_index+1, class_number))
+                classes_info.append((class_.name, cover_index, class_number))
                 class_number += 1
             self.save_class(class_path, code)
             if self.dbg and dbg_instrument and method_number > self.dbg_end: # Now leave other code not instrumented.
@@ -64,11 +67,25 @@ class Instrumenter(object):
             print("Number of methods instrumented: {0}-{1} from {2}".format(self.dbg_start, self.dbg_end, method_number))
         if instrument:
             self.generate_reporter_class(classes_info, output_dir)
+            if self.mem_stats:
+                self.save_reporter_array_stats(classes_info)
             Utils.copytree(self.instrumentation_smali_path, output_dir)
         
     def generate_reporter_class(self, classes_info, dir_path):
         acv_reporter = AcvReporter(classes_info)
         acv_reporter.save(dir_path)
+
+    def save_reporter_array_stats(self, classes_info, verbose=False):
+        log_path = os.path.join("allocation_log.csv")
+        csv_text = ""
+        if self.mem_stats == "verbose":
+            entries = ["{},{},{}".format(self.package, cl[0], cl[1]) for cl in classes_info]
+            csv_text = "\n".join(entries)
+        else:
+            memory = sum(cl[1] for cl in classes_info)
+            logging.info("{} bytes allocated in AcvReporter.smali".format(memory))
+            csv_text = "{},{}".format(self.package, memory)
+        Utils.log_entry(log_path, csv_text+'\n')
 
     def instrument_class(self, smali_class, class_number, method_number=0, instrument=True, dbg_start=None, dbg_end=None):
         class_lines = []
@@ -418,5 +435,3 @@ class SmaliHelper(object):
         # dalvik uses register pairs for J(long) and D(double) types
         count = sum([p.words for p in paras])
         return count
-
-

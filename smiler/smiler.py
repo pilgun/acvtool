@@ -124,7 +124,7 @@ def start_instrumenting(package, release_thread=False, onstop=None, timeout=None
     t = threading.Thread(target=run)
     t.start()
     
-    print("Press Ctrl+C to stop instrumenting process: ...")
+    print("Press Ctrl+C to finish ...")
     signal.signal(signal.SIGINT, stop)
     
 def coverage_is_locked(package_name):
@@ -157,7 +157,7 @@ def stop_instrumenting(package_name, timeout=None):
         logging.info("crash report /mnt/sdcard/{0}/{1}".format(package_name, crash_file))
 
 @timeit
-def instrument_apk(apk_path, result_dir, dbg_start=None, dbg_end=None, installation=False, granularity=Granularity.default):
+def instrument_apk(apk_path, result_dir, dbg_start=None, dbg_end=None, installation=False, granularity=Granularity.default, mem_stats=None):
     '''
     I assume that the result_dir is empty is checked.
     '''
@@ -173,7 +173,7 @@ def instrument_apk(apk_path, result_dir, dbg_start=None, dbg_end=None, installat
     instrument_manifest(manifest_path)
     smali_code_path = get_path_to_smali_code(unpacked_data_path)
     pickle_path = get_pickle_path(apk_path, result_dir)
-    instrument_smali_code(smali_code_path, pickle_path, package, granularity, dbg_start, dbg_end)
+    instrument_smali_code(smali_code_path, pickle_path, package, granularity, dbg_start, dbg_end, mem_stats)
     logging.info("instrumented")
    
     instrumented_package_path = get_path_to_instrumented_package(apk_path, result_dir)
@@ -265,9 +265,9 @@ def instrument_manifest(manifest_path):
     manifest_instrumenter.instrumentAndroidManifestFile(manifest_path, addSdCardPermission=True)
 
 @timeit
-def instrument_smali_code(input_smali_dir, pickle_path, package, granularity, dbg_start=None, dbg_end=None):
+def instrument_smali_code(input_smali_dir, pickle_path, package, granularity, dbg_start=None, dbg_end=None, mem_stats=None):
     smali_tree = SmaliTree(input_smali_dir)
-    smali_instrumenter = Instrumenter(smali_tree, granularity, dbg_start, dbg_end)
+    smali_instrumenter = Instrumenter(smali_tree, granularity, package, dbg_start, dbg_end, mem_stats)
     smali_instrumenter.save_instrumented_smali(input_smali_dir)
     smali_instrumenter.save_pickle(pickle_path)
 

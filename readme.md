@@ -19,7 +19,7 @@
     $ acv -h
     ```
 
-When successfully installed, you will be able to execute `acv -h`. This command will create the working directory "\~/acvtool" and the configuration file "\~/acvtool/config.json". 
+    When successfully installed, you will be able to execute `acv -h`. This command will create the working directory "\~/acvtool" and the configuration file "\~/acvtool/config.json". 
 
 2. Specify absolute paths to the Android tools at "~/acvtool/config.json" (%userprofile%\acvtool\config.json in Windows) for the following variables.
     * AAPT
@@ -27,7 +27,7 @@ When successfully installed, you will be able to execute `acv -h`. This command 
     * ADB
     * APKSIGNER
 
-2.1. Windows configuration example
+    2.1. Windows configuration example
 
     ```json
     {
@@ -37,7 +37,7 @@ When successfully installed, you will be able to execute `acv -h`. This command 
         "APKSIGNER": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\24.0.3\\apksigner.bat",
     }
     ```
-2.2. OSX, Linux configuration example
+    2.2. OSX, Linux configuration example
 
     ```json
     {
@@ -58,31 +58,37 @@ Steps:
 3. Initiate instrumentation process in the emulator. [start <package>]
 4. Test the application. (just click the installed app)
 5. Finish instrumention process in the emulator. [Press Ctrl+C]
-6. Generate coverage report. [report <package> -p <pickle_path>]
+6. Generate the code coverage report. [report <package> -p <pickle_path>]
 
-Instrument an apk:
+Details:
+1. Instrument an apk:
 
     ```shell
     $ acv instrument <path>
     ```
 
-An APK file and \<package_name>.pickle file will be created.
+    An APK file and \<package_name>.pickle file will be created.
 
-Install/uninstall the app in emulator/device:
+2. Install/uninstall the app in emulator/device:
 
     ```shell
     $ acv install <path>
     $ acv uninstall <path>
     ```
 
-Initiate instrumentation process of the APK:
+3. Initiate instrumentation process of the APK:
 
     ```shell
     $ acv start <package.name>
     ```
 
-Now the application must be tested manually or automatically. Acvtool itself does not provide the strategies for testing. Finish instrumentation process to generate coverage file by Ctrl+C.
-Generate coverage report after tesing of apk:
+4. Now test the application manually or automatically.
+
+    Note: Acvtool itself does not generate tests. 
+
+5. Finalize testing by pressing Ctrl+C. Code coverage file will be produced at the emulator/device side.
+
+6. Generate the code coverage report after tesing an app:
 
     ```shell
     $ acv report <package.name> -p <path>
@@ -120,13 +126,13 @@ Generate coverage report after tesing of apk:
     
     Press "Ctrl+c" in the console where the acvtool has been launched with "acv start".
 
-6. Generate the coverage report. 
+6. Generate the code coverage report. 
 
     ```shell
     $ acv report com.gnsdm.snake -p  ~/acvtool/acvtool_working_dir/metadata/com.gnsdm.snake.pickle
     ```
 
-The coverage report will be located at "~/acvtool/acvtool_working_dir/report/com.gnsdm.snake/report"
+The code coverage report will be located at "~/acvtool/acvtool_working_dir/report/com.gnsdm.snake/report"
 
 ###
 
@@ -166,12 +172,37 @@ $ acv <command> <path> [-/--options]
 * [apkil](https://github.com/kelwin/apkil)
 * [Apktool](https://ibotpeaches.github.io/Apktool/)
 
-## Reference
+## References
 
-ACVTool will be demonstrated at ACM Conference on Computer and Communications Security 2018, Toronto, October 15-19.
-Link to the paper and bibtex reference will soon appear here.
+ACVTool was demonstrated at ACM SIGSAC Conference on Computer and Communications Security 2018, Toronto, October 15-19.
 
-The citation of the paper is highly appreciated.
+* [An Effective Android Code Coverage Tool](https://dl.acm.org/citation.cfm?id=3278484)
+* [The Influence of Code Coverage Metrics on Automated Testing Efficiency in Android](https://dl.acm.org/citation.cfm?id=3278524)
+
+Please use the following bibtex references to cite our papers:
+
+```
+@inproceedings{pilgun2018acvtool,
+  title={An Effective Android Code Coverage Tool},
+  author={Pilgun, Aleksandr and Gadyatskaya, Olga and Dashevskyi, Stanislav and Zhauniarovich, Yury and Kushniarou, Artsiom},
+  booktitle={Proceedings of the 2018 ACM SIGSAC Conference on Computer and Communications Security},
+  pages={2189--2191},
+  year={2018},
+  organization={ACM}
+}
+```
+
+```
+@inproceedings{DGPZ2018cc_influence,
+  title={The Influence of Code Coverage Metrics on Automated Testing Efficiency in Android},
+  author={Dashevskyi, Stanislav and Gadyatskaya, Olga and Pilgun, Aleksandr and Zhauniarovich, Yury},
+  booktitle={Proceedings of the 2018 ACM SIGSAC Conference on Computer and Communications Security},
+  pages={2216--2218},
+  year={2018},
+  organization={ACM}
+}
+```
+
 
 ## License
 
