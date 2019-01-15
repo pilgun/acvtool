@@ -124,6 +124,7 @@ class Instrumenter(object):
         if instrument:
             odd_regs = 3
         is_not_abstract_or_native = 'abstract' not in method.access and 'native' not in method.access
+        is_not_native = 'native' not in method.access
         if is_not_abstract_or_native:
             is_static = self.is_method_static(method)
             reg_map = self.map_registers_p_to_v(method, is_static)
@@ -137,10 +138,11 @@ class Instrumenter(object):
         annotations = method.get_annotations()
         if annotations:
             lines[0:0] = annotations
-        if is_not_abstract_or_native:
+        if is_not_native:
             parameters = method.get_parameters()
             if parameters:
                 lines[0:0] = parameters
+        if is_not_abstract_or_native:
             lines.insert(0, method.get_registers_line(odd_regs=odd_regs))
         lines.insert(0, method.get_method_line())
         lines.append(method.get_end_line())
