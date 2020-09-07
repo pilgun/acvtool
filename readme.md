@@ -174,15 +174,9 @@ $ acv <command> <path> [-/--options]
 
 ## References
 
-ACVTool was demonstrated at ACM SIGSAC Conference on Computer and Communications Security 2018, Toronto, October 15-19.
-
-* [An Effective Android Code Coverage Tool](https://dl.acm.org/citation.cfm?id=3278484)
-* [The Influence of Code Coverage Metrics on Automated Testing Efficiency in Android](https://dl.acm.org/citation.cfm?id=3278524)
-
 Please cite our paper:
-
 ```
-@article{pilgun2020fine,
+@article{pilgun2020acvtool,
   title={Fine-grained code coverage measurement in automated black-box Android testing},
   author={Pilgun, Aleksandr and Gadyatskaya, Olga and Zhauniarovich, Yury and Dashevskyi, Stanislav and Kushniarou, Artsiom and Mauw, Sjouke},
   journal={ACM Transactions on Software Engineering and Methodology (TOSEM)},
