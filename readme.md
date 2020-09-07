@@ -179,30 +179,20 @@ ACVTool was demonstrated at ACM SIGSAC Conference on Computer and Communications
 * [An Effective Android Code Coverage Tool](https://dl.acm.org/citation.cfm?id=3278484)
 * [The Influence of Code Coverage Metrics on Automated Testing Efficiency in Android](https://dl.acm.org/citation.cfm?id=3278524)
 
-Please use the following bibtex references to cite our papers:
+Please cite our paper:
 
 ```
-@inproceedings{pilgun2018acvtool,
-  title={An Effective Android Code Coverage Tool},
-  author={Pilgun, Aleksandr and Gadyatskaya, Olga and Dashevskyi, Stanislav and Zhauniarovich, Yury and Kushniarou, Artsiom},
-  booktitle={Proceedings of the 2018 ACM SIGSAC Conference on Computer and Communications Security},
-  pages={2189--2191},
-  year={2018},
-  organization={ACM}
+@article{pilgun2020fine,
+  title={Fine-grained code coverage measurement in automated black-box Android testing},
+  author={Pilgun, Aleksandr and Gadyatskaya, Olga and Zhauniarovich, Yury and Dashevskyi, Stanislav and Kushniarou, Artsiom and Mauw, Sjouke},
+  journal={ACM Transactions on Software Engineering and Methodology (TOSEM)},
+  volume={29},
+  number={4},
+  pages={1--35},
+  year={2020},
+  publisher={ACM New York, NY, USA}
 }
 ```
-
-```
-@inproceedings{DGPZ2018cc_influence,
-  title={The Influence of Code Coverage Metrics on Automated Testing Efficiency in Android},
-  author={Dashevskyi, Stanislav and Gadyatskaya, Olga and Pilgun, Aleksandr and Zhauniarovich, Yury},
-  booktitle={Proceedings of the 2018 ACM SIGSAC Conference on Computer and Communications Security},
-  pages={2216--2218},
-  year={2018},
-  organization={ACM}
-}
-```
-
 
 ## License
 
