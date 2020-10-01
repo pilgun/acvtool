@@ -1,5 +1,9 @@
 # ACVTool
 
+[![Software license](https://img.shields.io/github/license/pilgun/acvcut)](https://github.com/pilgun/acvcut/blob/master/LICENSE)
+[![Python version](https://img.shields.io/badge/-Python%202.7-yellow)](https://github.com/pilgun/acvcut/blob/master/LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3973735.svg)](https://doi.org/10.5281/zenodo.3973735)
+
 `acvtool.py` instruments Android apk and produces its code coverage without original source code. Code coverage is based on Smali representation of the bytecode.
 
 [Demonstration video of ACVTool](https://www.youtube.com/watch?v=xyaR4Ivrij0).
