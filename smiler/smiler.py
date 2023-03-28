@@ -59,7 +59,7 @@ def get_apk_properties(path):
 
 
 def get_package_files_list(package_name):
-    cmd = '%s shell ls "/mnt/sdcard/%s/"' % (config.adb_path, package_name)
+    cmd = '%s shell ls "/sdcard/Download/%s/"' % (config.adb_path, package_name)
     out = request_pipe(cmd)
     files = [f for f in out.split() if not f.endswith('/')]
     return files  
@@ -85,12 +85,12 @@ def get_execution_results(package_name, output_dir):
         adb_delete_files(package_name, crash_file)
 
 def adb_pull(package_name, file_path, pull_to):
-    cmd = "%s pull mnt/sdcard/%s/%s %s" % (config.adb_path, package_name, file_path, os.path.abspath(pull_to))
+    cmd = "%s pull /sdcard/Download/%s/%s %s" % (config.adb_path, package_name, file_path, os.path.abspath(pull_to))
     out = request_pipe(cmd)
     logging.info(out)
 
 def adb_delete_files(package_name, file_name):
-    cmd = "%s shell rm mnt/sdcard/%s/%s" % (config.adb_path, package_name, file_name)
+    cmd = "%s shell rm /sdcard/Download/%s/%s" % (config.adb_path, package_name, file_name)
     out = request_pipe(cmd)
 
 def grant_storage_permission(package):
@@ -128,7 +128,7 @@ def start_instrumenting(package, release_thread=False, onstop=None, timeout=None
     signal.signal(signal.SIGINT, stop)
     
 def coverage_is_locked(package_name):
-    cmd = "{} shell \"test -e /mnt/sdcard/{}.lock > /dev/null 2>&1 && echo \'1\' || echo \'0\'\"".format(config.adb_path, package_name)
+    cmd = "{} shell \"test -e /sdcard/Download/{}.lock > /dev/null 2>&1 && echo \'1\' || echo \'0\'\"".format(config.adb_path, package_name)
     logging.debug('Command to check lock file:' + cmd)
     locked = subprocess.check_output(cmd, shell=True).replace("\n","").replace("\r", "")
     return locked == '1'
@@ -151,10 +151,10 @@ def stop_instrumenting(package_name, timeout=None):
     coverage_files = [f for f in files if f.endswith(".ec")]
     crash_file = CRASH_REPORT_FILENAME if CRASH_REPORT_FILENAME in files else None
 
-    logging.info("coverage files at /mnt/sdcard/{0}:".format(package_name))
+    logging.info("coverage files at /sdcard/Download/{0}:".format(package_name))
     logging.info("\n".join(coverage_files))
     if crash_file:
-        logging.info("crash report /mnt/sdcard/{0}/{1}".format(package_name, crash_file))
+        logging.info("crash report /sdcard/Download/{0}/{1}".format(package_name, crash_file))
 
 @timeit
 def instrument_apk(apk_path, result_dir, dbg_start=None, dbg_end=None, installation=False, granularity=Granularity.default, mem_stats=None):

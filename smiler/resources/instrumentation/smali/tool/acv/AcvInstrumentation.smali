@@ -6,7 +6,7 @@
 # static fields
 .field private static final ACTION_FINISH_TESTING:Ljava/lang/String; = "tool.acv.finishtesting"
 
-.field private static final DEFAULT_REPORT_ROOTDIR:Ljava/lang/String; = "/mnt/sdcard"
+.field private static final DEFAULT_REPORT_ROOTDIR:Ljava/lang/String; = "/sdcard/Download"
 
 .field private static final ERRORS_FILENAME:Ljava/lang/String; = "errors.txt"
 
@@ -727,7 +727,7 @@
     .line 94
     const-string v0, "coverageDir"
 
-    const-string v1, "/mnt/sdcard"
+    const-string v1, "/sdcard/Download"
 
     invoke-virtual {p1, v0, v1}, Landroid/os/Bundle;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 

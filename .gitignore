@@ -112,3 +112,4 @@ dmypy.json
 
 times_log.csv
 allocation_log.csv
+wd*
