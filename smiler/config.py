@@ -22,7 +22,8 @@ class config(object):
         config_data = json.load(json_file)
 
     APKTOOL_JAVA_PATH = "java" # it is possible that some tools will require different versions of java
-    APKTOOL_JAVA_OPTS = "-Xms512m -Xmx1024m"
+    # Fix for JDK17+: https://github.com/iBotPeaches/Apktool/pull/3215 & https://github.com/openjdk/jdk/pull/15273
+    APKTOOL_JAVA_OPTS = "-Xms512m -Xmx1024m -Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djdk.nio.zipfs.allowDotZipEntry=true"
     APKTOOL_QUITE = "True"
 
     INSTRUMENTING_NAME = "tool.acv.AcvInstrumentation"
