@@ -23,9 +23,9 @@
     $ acv -h
     ```
 
-    When successfully installed, you will be able to execute `acv -h`. This command will create the working directory "\~/acvtool" and the configuration file "\~/acvtool/config.json". 
+    When successfully installed, you will be able to execute `acv -h`. This command will create the working directory `~/acvtool` and the configuration file `~/acvtool/config.json`. 
 
-2. Specify absolute paths to the Android tools at "~/acvtool/config.json" (%userprofile%\acvtool\config.json in Windows) for the following variables.
+2. Specify absolute paths to the Android tools at `~/acvtool/config.json` (`%userprofile%\acvtool\config.json` in Windows) for the following variables.
     * AAPT
     * ZIPALIGN
     * ADB
@@ -71,7 +71,7 @@ Details:
     $ acv instrument <path>
     ```
 
-    An APK file and \<package_name>.pickle file will be created.
+    An APK file and a `<package_name>.pickle` file will be created.
 
 2. Install/uninstall the app in emulator/device:
 
@@ -95,7 +95,7 @@ Details:
 6. Generate the code coverage report after testing an app:
 
     ```shell
-    $ acv report <package.name> -p <path>
+    $ acv report <package.name> -p <path_pickle_file>
     ```
 
 ### Example
@@ -136,7 +136,7 @@ Details:
     $ acv report com.gnsdm.snake -p  ~/acvtool/acvtool_working_dir/metadata/com.gnsdm.snake.pickle
     ```
 
-The code coverage report will be located at "~/acvtool/acvtool_working_dir/report/com.gnsdm.snake/report"
+The code coverage report will be located at `~/acvtool/acvtool_working_dir/report/com.gnsdm.snake/report`.
 
 ###
 
@@ -147,29 +147,31 @@ $ acv <command> <path> [-/--options]
 
   positional arguments:
   
-| command      | argument     | description                              | options                              |
-| :----------- | :----------- | :--------------------------------------- | :----------------------------------- |
-| instrument   | path_to_apk  | Instruments an apk                       | --wd, --dbgstart, --dbgend, --r, --i |
-| install      | path_to_apk  | Installs an apk.                         |                                      |
-| uninstall    | path_to_apk  | Uninstalls an apk.                       |                                      |
-| start        | package.name | Starts runtime coverage data collection. |                                      |
-| stop         | -            | Stops runtime coverage data collection.  |                                      |
-| report       | package_name | Produces a report.                       | -p(required), -o, -ec                |
-| sign         | apk_path     | Signs and aligns an apk.                |                                      |
+| command      | argument     | description                              | options                                       |
+| :----------- | :----------- | :--------------------------------------- | :-------------------------------------------- |
+| instrument   | path_to_apk  | Instruments an apk                       | --wd, --dbgstart, --dbgend, --r, --i, --force |
+| install      | path_to_apk  | Installs an apk.                         |                                               |
+| uninstall    | path_to_apk  | Uninstalls an apk.                       |                                               |
+| start        | package_name | Starts runtime coverage data collection. |                                               |
+| stop         | -            | Stops runtime coverage data collection.  |                                               |
+| report       | package_name | Produces a report.                       | -p(required), -o, -ec                         |
+| sign         | apk_path     | Signs and aligns an apk.                 |                                               |
 
   optional arguments:
   
-| option     | argument            | description                                                                                                                                 |
-| :--------- | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| -h, --help | -                   | Shows this help message and exit.                                                                                                           |
-| --version  | -                   | Shows program's version number and exits.                                                                                                   |
-| --wd       | \<result_directory> | Path to the directory where the working data is stored. Default: .\smiler\acvtool_working_dir.                                              |
-| --dbgstart | \<methods_number>   | For troubleshooting purposes. The number of the first method to be instrumented. Only methods from DBGSTART to DBGEND will be instrumented. |
-| -r, --r    | -                   | Working directory (--wd) will be overwritten without asking.                                                                                |
-| -i, --i    | -                   | Installs the application immediately after instrumenting.                                                                                   |
-| -p         | \<pickle_file>      | Path to the Pickle file, that was generated during the instrumentation process (required).                                                  |
-| -o         | <output_dir>        | Output directory.                                                                                                                           |
-| -ec        | <ec_dir>            | The directory with the code coverage binary files pre-loaded from the emulator.                                                             |
+| option      | argument            | description                                                                                                                                 |
+| :---------  | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| -h, --help  | -                   | Shows this help message and exit.                                                                                                           |
+| --version   | -                   | Shows program's version number and exits.                                                                                                   |
+| --wd        | \<result_directory> | Path to the directory where the working data is stored. Default: ~\acvtool\acvtool_working_dir.                                              |
+| --dbgstart  | \<methods_number>   | For troubleshooting purposes. The number of the first method to be instrumented. Only methods from DBGSTART to DBGEND will be instrumented. |
+| --dbgend    | \<methods_number>   | For troubleshooting purposes. The number of the last method to be instrumented. Only methods from DBGSTART to DBGEND will be instrumented. |
+| -r, --r     | -                   | Performs the whole testing cycle in a single session: instrument, start, report.                                                            |
+| -f, --force | -                   | Working directory (--wd) will be overwritten without asking.                                                                                |
+| -i, --i     | -                   | Installs the application immediately after instrumenting.                                                                                   |
+| -p          | \<pickle_file>      | Path to the Pickle file, that was generated during the instrumentation process (required).                                                  |
+| -o          | <output_dir>        | Output directory.                                                                                                                           |
+| -ec         | <ec_dir>            | The directory with the code coverage binary files pre-loaded from the emulator.                                                             |
 
 ## Dependencies
 
