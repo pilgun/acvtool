@@ -61,7 +61,7 @@ Steps:
 2. Install the instrumented APK in the Android emulator or device. [install <path>]
 3. Initiate instrumentation process in the emulator. [start <package>]
 4. Test the application. (just click the installed app)
-5. Finish instrumention process in the emulator. [Press Ctrl+C]
+5. Finish instrumentation process in the emulator. [Press Ctrl+C]
 6. Generate the code coverage report. [report <package> -p <pickle_path>]
 
 Details:
@@ -92,7 +92,7 @@ Details:
 
 5. Finalize testing by pressing Ctrl+C. Code coverage file will be produced at the emulator/device side.
 
-6. Generate the code coverage report after tesing an app:
+6. Generate the code coverage report after testing an app:
 
     ```shell
     $ acv report <package.name> -p <path>
@@ -126,7 +126,7 @@ Details:
 
     Interact with the application a little bit.
 
-5. Finish instrumention process in the emulator. 
+5. Finish instrumentation process in the emulator. 
     
     Press "Ctrl+c" in the console where the acvtool has been launched with "acv start".
 
@@ -155,7 +155,7 @@ $ acv <command> <path> [-/--options]
 | start        | package.name | Starts runtime coverage data collection. |                                      |
 | stop         | -            | Stops runtime coverage data collection.  |                                      |
 | report       | package_name | Produces a report.                       | -p(required), -o, -ec                |
-| sign         | apk_path     | Signs and alignes an apk.                |                                      |
+| sign         | apk_path     | Signs and aligns an apk.                |                                      |
 
   optional arguments:
   
@@ -166,7 +166,7 @@ $ acv <command> <path> [-/--options]
 | --wd       | \<result_directory> | Path to the directory where the working data is stored. Default: .\smiler\acvtool_working_dir.                                              |
 | --dbgstart | \<methods_number>   | For troubleshooting purposes. The number of the first method to be instrumented. Only methods from DBGSTART to DBGEND will be instrumented. |
 | -r, --r    | -                   | Working directory (--wd) will be overwritten without asking.                                                                                |
-| -i, --i    | -                   | Installs the application immidiately after instrumenting.                                                                                   |
+| -i, --i    | -                   | Installs the application immediately after instrumenting.                                                                                   |
 | -p         | \<pickle_file>      | Path to the Pickle file, that was generated during the instrumentation process (required).                                                  |
 | -o         | <output_dir>        | Output directory.                                                                                                                           |
 | -ec        | <ec_dir>            | The directory with the code coverage binary files pre-loaded from the emulator.                                                             |
