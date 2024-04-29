@@ -1,7 +1,6 @@
 import methodnode
 import sys
 import os
-from logger import log
 from fieldnode import FieldNode
 from codeblocknode import CodeBlockNode
 
@@ -26,6 +25,9 @@ class ClassNode(object):
         self.annotations_comment = ''
         self.annotations = []
         self.debugs = []
+        self.meth_ref_dict = None
+        self.ignore = False
+        self.keep = False
 
         if filename or buf:
             self.__parse(filename, buf, folder)
@@ -134,7 +136,6 @@ class ClassNode(object):
                 pass
             line = f.readline()
         f.close()
-        log("ClassNode: " + self.name + " parsed!")
 
     def get_class_description(self):
         buf = []
@@ -190,6 +191,7 @@ class ClassNode(object):
             m.reload()
             self.buf.extend(m.buf)
 
+
     def set_name(self, name):
         self.name = name
     
@@ -224,12 +226,18 @@ class ClassNode(object):
         f.close()
 
     def coverable(self):
+        if self.ignore:
+            return 0
         return sum(m.coverable() for m in self.methods)
 
     def covered(self):
+        if self.ignore:
+            return 0
         return sum(m.covered() for m in self.methods)
 
     def not_covered(self):
+        if self.ignore:
+            return 0
         return sum(m.not_covered() for m in self.methods)
     
     def coverage(self):
@@ -239,18 +247,28 @@ class ClassNode(object):
         return float(self.covered()) / coverable
 
     def missed_methods(self):
+        if self.ignore:
+            return 0
         return sum(m.covered() == 0 for m in self.methods)
 
     def mtds_coverable(self):
+        if self.ignore:
+            return 0
         return sum(m.cover_code > -1 for m in self.methods)
 
     def is_coverable(self):
+        if self.ignore:
+            return False
         return any(m.cover_code > -1 for m in self.methods)
 
     def mtds_covered(self):
+        if self.ignore:
+            return 0
         return sum(m.called for m in self.methods)
 
     def mtds_not_covered(self):
+        if self.ignore:
+            return 0
         return self.mtds_coverable() - self.mtds_covered()
 
     def mtds_coverage(self):
@@ -259,3 +277,7 @@ class ClassNode(object):
             return None
         return float(self.mtds_covered()) / coverable
         
+    def update_meth_ref_dict(self):
+        self.meth_ref_dict = {}
+        for m in self.methods:
+            self.meth_ref_dict[m.descriptor] = m

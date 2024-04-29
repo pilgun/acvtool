@@ -1,10 +1,21 @@
 import os
 import shutil
+import logging
 from time import time
 from datetime import datetime
 
 class Utils(object):
     ''' Static Helpers.'''
+
+    @staticmethod
+    def generate_smali_classes_dirs(unpacked_path, dex_number):
+        smali_dirs = {}
+        smali_dirs[1] = (os.path.join(unpacked_path, "smali"))
+        for i in range(2, dex_number+1):
+            pth = os.path.join(unpacked_path, "smali_classes{}".format(i))
+            smali_dirs[i] = pth
+            os.makedirs(pth)
+        return smali_dirs
 
     @staticmethod
     def rm_tree(path):
@@ -16,23 +27,43 @@ class Utils(object):
                 os.system(cmd)
             else:
                 shutil.rmtree(path) 
+    
+    @staticmethod
+    def rm_if_exists(path):
+        logging.info("delete: " + path)
+        if os.path.exists(path):
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            else:
+                os.remove(path)
+
+    @staticmethod
+    def recreate_dir(path):
+        Utils.rm_tree(path)
+        if os.path.isdir(path):
+            raise Exception("shutil.rmtree didn't manage to remove dir in time: {}".format(path))
+        os.makedirs(path)
+
+    @staticmethod
+    def mkdirs(path):
+        if not os.path.exists(path):
+            os.makedirs(path)
 
     @staticmethod
     def get_groupped_classes(tree):
         # Group classes by relative path to generate index.html.
         groups = []
         classes = []
-        key = tree.classes[0].folder
-        classes.append(tree.classes[0])
-        for i in range(1, len(tree.classes)):
-            if tree.classes[i].folder == key:
-                classes.append(tree.classes[i])
-            else:
-                groups.append(classes)
-                key = tree.classes[i].folder
-                classes = [tree.classes[i]]
-        groups.append(classes)
-
+        if tree.classes:
+            key = tree.classes[0].folder
+            for i, s in enumerate(tree.classes):
+                if tree.classes[i].folder == key:
+                    classes.append(tree.classes[i])
+                else:
+                    groups.append(classes)
+                    key = tree.classes[i].folder
+                    classes = [tree.classes[i]]
+            groups.append(classes)
         return groups
 
     @staticmethod
@@ -98,6 +129,18 @@ class Utils(object):
         with open(log_path, 'a+') as log_file:
             log_file.write(entry)
             log_file.flush()
+    
+
+    @staticmethod
+    def get_smali_dirs(unpacked_apk):
+        i = 1
+        smali_dirs = []
+        path = os.path.join(unpacked_apk, "smali")
+        while os.path.exists(path):
+            smali_dirs.append(path)
+            i += 1
+            path = os.path.join(unpacked_apk, "smali_classes" + str(i))
+        return smali_dirs
 
 
 def timeit(method):

@@ -1,17 +1,17 @@
 import os
 import copy
-import sys
-import shutil
-import StringIO
 import classnode 
-from logger import log
+from smiler.instrumenting.utils import Utils
 
 class SmaliTree(object):
 
-    def __init__(self, foldername):
+    def __init__(self, treeId, foldername):
         self.foldername = ""
-        self.smali_files = []
         self.classes = []
+        self.class_ref_dict = None
+        self.instrumented = False
+        self.instrumented_method_number = None # go through method counter among all smali trees
+        self.Id = treeId # smali dir number starting from 1
 
         self.__parse(foldername)
 
@@ -21,7 +21,7 @@ class SmaliTree(object):
                 "".join([repr(class_) for class_ in self.classes]))
 
     def __parse(self, foldername):
-        print "parsing %s..." % foldername
+        print("parsing {}...".format(foldername))
         self.foldername = foldername
         for (path, dirs, files) in os.walk(self.foldername):
             for f in files:
@@ -31,11 +31,8 @@ class SmaliTree(object):
                     continue
                 ext = os.path.splitext(name)[1]
                 if ext != '.smali': continue
-                self.smali_files.append(name)
                 folder, fn = os.path.split(rel_path)
                 self.classes.append(classnode.ClassNode(filename=name, folder=folder))
-        # print repr(self.smali_files)
-        log("SmaliTree parsed!")
 
     def get_class(self, class_name):
         result = [c for c in self.classes if c.name == class_name]
@@ -46,7 +43,7 @@ class SmaliTree(object):
     
     def add_class(self, class_node):
         if [c for c in self.classes if c.name == class_node.name]:
-            print "Class %s alreasy exsits!" % class_node.name
+            print("Class {} alreasy exsits!".format(class_node.name))
             return False
         else:
             self.classes.append(copy.deepcopy(class_node))
@@ -57,9 +54,13 @@ class SmaliTree(object):
         pass
 
     def save(self, new_foldername):
-        print "Saving %s..." % new_foldername
-        if os.path.exists(new_foldername):
-            shutil.rmtree(new_foldername)
-        os.makedirs(new_foldername)
+        print("Saving {}...".format(new_foldername))
+        Utils.recreate_dir(new_foldername)
         for c in self.classes:
             c.save(new_foldername)
+
+    def update_class_ref_dict(self):
+        self.class_ref_dict = {}
+        for cl in self.classes:
+            cl.update_meth_ref_dict()
+            self.class_ref_dict[cl.name] = cl

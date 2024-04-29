@@ -1,6 +1,5 @@
 import constants
 import insnnode
-from logger import log
 from labelnode import LabelNode
 from arraydatanode import ArrayDataNode
 from typenode import TypeNode
@@ -28,7 +27,8 @@ class MethodNode(object):
         self.cover_code = -1
         self.called = False
         # monitor-enter/monitor-exit instructions are in use
-        self.synchronized = False 
+        self.synchronized = False
+        self.ignore = False # True if method stays just to satisfy compiler
 
         if lines:
             self.__parse(lines)
@@ -80,6 +80,8 @@ class MethodNode(object):
             # .catchall {<label1> ..  <label2>} <label3>
             elif segs[0] == ".catch" or segs[0] == ".catchall": 
                 try_node_cache.append(line)
+                self.insns.append(insnnode.InsnNode(line))
+                index += 1
             elif segs[0] == ".packed-switch" or segs[0] == ".sparse-switch":
                 lb = self.labels[self.buf[k - 1][1:]]
                 lines = [line]
@@ -154,7 +156,6 @@ class MethodNode(object):
 
         if self.name == "<init>":
             self.is_constructor = True
-        log("MethodNode: " + self.name + " parsed!")
 
     def __parse_desc(self):
         self.name = self.descriptor.split('(', 1)[0]
@@ -328,14 +329,20 @@ class MethodNode(object):
 
     def coverable(self):
         '''Number of objects that could be tracked in the method'''
+        if self.ignore:
+            return 0
         return sum(insn.cover_code > -1 for insn in self.insns) + \
             sum(lbl.cover_code > -1 for k, lbl in self.labels.items())
 
     def covered(self):
         '''Number of really executed statements including labels'''
+        if self.ignore:
+            return 0
         return sum(insn.covered for insn in self.insns) + sum(lbl.covered for k, lbl in self.labels.items())
 
     def not_covered(self):
+        if self.ignore:
+            return 0
         return self.coverable() - self.covered()
         
     def coverage(self):

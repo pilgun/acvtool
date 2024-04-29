@@ -38,18 +38,29 @@ class config(object):
     aapt_path = config_data["AAPT"]
     zipalign = config_data["ZIPALIGN"]
 
-    version = "0.2"
+    version = "2.0"
     logging_yaml = resource_filename('smiler.resources', 'logging.yaml')
 
     default_working_dir = os.path.join(dir_path, "acvtool_working_dir")
     default_report_dir = os.path.join(default_working_dir, "report")
     default_onstop_timeout = 240
 
+    throttle = 10
+    
+    # 65535 is the max number of methods in DEX, 11 is the number of methods acvtool adds to the app
+    METHOD_LIMIT = 50000 # 65535-11
+
     @staticmethod
     def get_ec_dir(output_dir, package):
         return os.path.join(output_dir, package, "ec_files")
     
-    def check_tools(self):
+
+    @staticmethod
+    def get_images_dir(output_dir, package):
+        return os.path.join(output_dir, package, "images")
+    
+    @staticmethod
+    def check_tools():
         err = False
         if not os.path.exists(config.apksigner_path):
             err = True
@@ -64,8 +75,7 @@ class config(object):
             err = True
             logging.error("zipalign was not found at {}".format(config.zipalign))
         if err:
-            logging.error("\nCONFIGURATION ERROR: Please check paths at {} or/and install required software.\n".format(self.config_path))
+            logging.error("\nCONFIGURATION ERROR: Please check paths at {} or/and install required software (consult README.md for details).\n".format(config.config_path))
             sys.exit()
 
-cf = config()
-cf.check_tools()
+config.check_tools()

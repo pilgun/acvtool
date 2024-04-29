@@ -1,4 +1,3 @@
-from logger import log
 
 class LabelNode(object):
     '''Consists of label line including tries, switches and array data if any.'''
@@ -26,8 +25,6 @@ class LabelNode(object):
         self.name = self.buf[1:]
         self.lid = lid
 
-        log("LabelNode: " + self.name + " parsed!")
-
     def reload(self):
         self.buf = self.get_line()
     
@@ -38,8 +35,8 @@ class LabelNode(object):
     def get_lines(self):
         ''' Returns labels including tries, switches, and arrays.'''
         lines = [":%s" % self.name]
-        for t in self.tries:
-            lines.append(t.buf)
+        # for t in self.tries:
+        #     lines.append(t.buf)
         if self.switch:
             for sl in self.switch.buf:
                 lines.append(sl)

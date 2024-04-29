@@ -9,7 +9,6 @@ class XmlSerialiser(object):
     def __init__(self, smalitree, app_name, granularity):
         self.smalitree = smalitree
         self.app_name = app_name
-        self.data = ""
         self.granularity = granularity
 
     def get_xml(self):

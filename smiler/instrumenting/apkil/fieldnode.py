@@ -1,4 +1,3 @@
-from logger import log
 
 class FieldNode(object):
 
@@ -8,6 +7,7 @@ class FieldNode(object):
         self.access = []
         self.descriptor = ""
         self.value = None
+        self.referred = False
 
         if lines:
             self.__parse(lines)
@@ -19,7 +19,6 @@ class FieldNode(object):
 
     # .field <access-spec> <field-name>:<descriptor> [ = <value> ]
     def __parse(self, lines):
-        #log("FieldNode: " + line + " parsing")
         self.buf = lines
 
         i = self.buf[0].find('=')
@@ -31,7 +30,6 @@ class FieldNode(object):
             segs = self.buf[0].split()
         self.access = segs[1:-1]
         self.name, self.descriptor = segs[-1].split(':')
-        log("FieldNode: " + self.name + " parsed!")
 
     def set_name(self, name):
         self.name = name

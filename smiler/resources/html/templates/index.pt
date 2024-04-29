@@ -7,7 +7,7 @@
 </head>
 <body>
     <ul class="breadcrumb">
-        <li><i class="ico ico-android"></i><a href="${respath}index.html">${appname}</a></li>
+        <li><i class="ico ico-android"></i><a href="${respath}main_index.html">${appname}</a></li>
         <li tal:condition="package"><i class="ico ico-package"></i>${package}</li>
         <li tal:condition="file_name">${file_name}</li>
     </ul>
@@ -16,7 +16,7 @@
 	
 	${table}
     
-	<div class="footer"><span class="left">Created with <a href="https://github.com/pilgun/acvtool">ACVTool</a> 0.1</span></div>
+	<div class="footer"><span class="left">Created with <a href="https://github.com/pilgun/acvtool">ACVTool</a> ${version}</span></div>
 
 	<script type="text/javascript" src="${respath}.resources/index.js"></script>
 </body>

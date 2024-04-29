@@ -1,0 +1,129 @@
+=======================================================================
+NOTICE
+=======================================================================
+
+This file lists notices, copyright and licenses of ACVTool.
+
+=======================================================================
+SUMMARY
+=======================================================================
+
+ACVTool 2.0 MULTIDEX
+
+ACVTool Version 2.0 MULTIDEX represents a significant upgrade from the previously published ACVTool 0.2 and ACVCut 1.0. Originally developed by Aleksandr Pilgun at the University of Luxembourg, these tools are the result of his original research and can be accessed via the Zenodo repository and GitHub releases. The release of ACVTool 2.0 introduces new functionality and improvements that impact all files under the github.com/pilgun/acvtool URL. ACVTool 2.0 adheres to the Apache 2.0 license.
+
+The following changes apply to ACVTool 2.0, including but not limited to:
+- Shrinking functionality and other improvements initially released under the ACVCut name (https://github.com/pilgun/acvcut)
+- Updated Apkil Tree Structure
+- Multidex support in terms of instrumenting, report generation and shrinking
+- Multi-apk installation support
+- Instrumentation implementation improvements
+- Shrinking implementation improvements
+- Report generation improvements
+- Additional commands (snap, flush, calculate, shrink)
+- Major code refactoring
+
+The multidex smali instrumentation technique is protected by a patent. Users and contributors to ACVTool automatically receive a license for this patent within the scope of ACVTool, as governed by the Apache 2.0 license. However, other implementations, re-implementations, or translations into different programming languages may require separate patent licensing.
+
+Contributions to ACVTool are subject to the Contributer License Agreement (to be defined).
+
+=======================================================================
+LICENSES
+=======================================================================
+
+ACVTOOL MULTIDEX
+
+Copyright (c) 2024 Aleksandr Pilgun. All rights preserved.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use ACVTool files from this repository except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+ACVTOOL 0.2
+
+Copyright © 2018-2020 SnT, University of Luxembourg, Aleksandr Pilgun. All rights preserved.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use the files under this repository except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+ACVCUT 1.0
+
+Copyright © 2020 University of Luxembourg, Aleksandr Pilgun. All rights preserved.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use the files under this repository except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+APKIL
+
+https://github.com/kelwin/apkil
+
+APKIL is an APK Instrumentation Library.
+Supported by Google Summer of Code 2012 and The Honeynet Project.
+
+Author: Kun Yang <kelwya@gmail.com>
+Project Wiki: http://code.google.com/p/droidbox/wiki/APIMonitor
+
+BBOXTESTER
+
+ACVTool may include a few fully reworked files from the BBox Tester repository (e.g. android_manifest.py). Changes may be observed and understood by comparing them with the original repository.
+
+https://github.com/zyrikby/BBoxTester
+
+BBoxTester is distributed under Apache-2.0 license. The citation of the paper is highly appreciated.
+
+APKTOOL
+
+ACVTool includes apktool binary ditributed at https://ibotpeaches.github.io/Apktool/
+Apktool source code is available at https://github.com/iBotPeaches/Apktool
+
+Copyright 2010 Ryszard Wiśniewski
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+HTML REPORT ICONS
+
+Icons were downloaded from https://icons8.com under CC BY 4.0 License.
+
+HIGHLIGHT.JS
+
+Copyright (c) 2006, Ivan Sagalaev
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of highlight.js nor the names of its contributors 
+      may be used to endorse or promote products derived from this software 
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
