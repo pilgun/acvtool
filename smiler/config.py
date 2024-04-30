@@ -62,16 +62,16 @@ class config(object):
     @staticmethod
     def check_tools():
         err = False
-        if not os.path.exists(config.apksigner_path):
+        if not os.path.exists(os.path.expandvars(config.apksigner_path)):
             err = True
             logging.error("apksigner was not found at {}".format(config.apksigner_path))
-        if not os.path.exists(config.adb_path):
+        if not os.path.exists(os.path.expandvars(config.adb_path)):
             err = True
             logging.error("adb tool was not found at {}".format(config.adb_path))
-        if not os.path.exists(config.aapt_path):
+        if not os.path.exists(os.path.expandvars(config.aapt_path)):
             err = True
             logging.error("aapt tool was not found at {}".format(config.aapt_path))
-        if not os.path.exists(config.zipalign):
+        if not os.path.exists(os.path.expandvars(config.zipalign)):
             err = True
             logging.error("zipalign was not found at {}".format(config.zipalign))
         if err:
