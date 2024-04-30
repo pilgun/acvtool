@@ -103,6 +103,6 @@ class AndroidManifest(object):
     def create_element(self, under_tag, tag, attributes):
         elem = self.xml.createElement(tag)
         if attributes:
-            for entry in attributes.iteritems():
+            for entry in attributes.items():
                 elem.setAttribute(entry[0], entry[1])
         return elem

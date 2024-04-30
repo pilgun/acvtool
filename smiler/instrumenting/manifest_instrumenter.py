@@ -1,4 +1,4 @@
-from android_manifest import AndroidManifest
+from .android_manifest import AndroidManifest
 
 
 def instrument_manifest(manifest_path):

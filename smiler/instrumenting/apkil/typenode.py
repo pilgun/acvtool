@@ -1,4 +1,4 @@
-import constants
+from .constants import BASIC_TYPES, BASIC_TYPES_BY_JAVA
 
 class TypeNode(object):
 
@@ -16,7 +16,7 @@ class TypeNode(object):
         self.dim = desc.rfind('[') + 1
         desc = desc[self.dim:]
 
-        if constants.BASIC_TYPES.has_key(desc[0]):
+        if desc[0] in BASIC_TYPES:
             self.type_ = desc[0]
             self.basic = True
             if self.type_ == 'V':
@@ -35,8 +35,8 @@ class TypeNode(object):
     def load_java(self, java):
         self.dim = java.count("[]")
         java = java.replace("[]", '')
-        if constants.BASIC_TYPES_BY_JAVA.has_key(java):
-            self.type_ = constants.BASIC_TYPES_BY_JAVA[java]
+        if java in BASIC_TYPES_BY_JAVA:
+            self.type_ = BASIC_TYPES_BY_JAVA[java]
             self.basic = True
             if self.type_ == 'V':
                 self.void = True

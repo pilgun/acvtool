@@ -1,7 +1,6 @@
 import os
 import copy
-import classnode 
-from smiler.instrumenting.utils import Utils
+from .classnode import ClassNode
 
 class SmaliTree(object):
 
@@ -32,7 +31,7 @@ class SmaliTree(object):
                 ext = os.path.splitext(name)[1]
                 if ext != '.smali': continue
                 folder, fn = os.path.split(rel_path)
-                self.classes.append(classnode.ClassNode(filename=name, folder=folder))
+                self.classes.append(ClassNode(filename=name, folder=folder))
 
     def get_class(self, class_name):
         result = [c for c in self.classes if c.name == class_name]
@@ -52,12 +51,6 @@ class SmaliTree(object):
     def remove_class(self, class_node):
         # self.classes.del()
         pass
-
-    def save(self, new_foldername):
-        print("Saving {}...".format(new_foldername))
-        Utils.recreate_dir(new_foldername)
-        for c in self.classes:
-            c.save(new_foldername)
 
     def update_class_ref_dict(self):
         self.class_ref_dict = {}

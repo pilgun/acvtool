@@ -1,11 +1,11 @@
-import constants
-import insnnode
-from labelnode import LabelNode
-from arraydatanode import ArrayDataNode
-from typenode import TypeNode
-from trynode import TryNode
-from switchnode import SwitchNode
-from codeblocknode import CodeBlockNode
+from .insnnode import InsnNode
+from .constants import BASIC_TYPES
+from .labelnode import LabelNode
+from .arraydatanode import ArrayDataNode
+from .typenode import TypeNode
+from .trynode import TryNode
+from .switchnode import SwitchNode
+from .codeblocknode import CodeBlockNode
 from operator import attrgetter
 
 class MethodNode(object):
@@ -80,7 +80,7 @@ class MethodNode(object):
             # .catchall {<label1> ..  <label2>} <label3>
             elif segs[0] == ".catch" or segs[0] == ".catchall": 
                 try_node_cache.append(line)
-                self.insns.append(insnnode.InsnNode(line))
+                self.insns.append(InsnNode(line))
                 index += 1
             elif segs[0] == ".packed-switch" or segs[0] == ".sparse-switch":
                 lb = self.labels[self.buf[k - 1][1:]]
@@ -142,7 +142,7 @@ class MethodNode(object):
                     segs = line.split()
                 self.annotations.append(CodeBlockNode(lines))
             else:
-                self.insns.append(insnnode.InsnNode(line))
+                self.insns.append(InsnNode(line))
                 index += 1
             k += 1
         
@@ -171,7 +171,7 @@ class MethodNode(object):
             if c == '[':
                 dim += 1
                 index += 1
-            elif constants.BASIC_TYPES.has_key(c):
+            elif c in BASIC_TYPES:
                 self.paras.append(TypeNode(paras[index - dim:index + 1]))
                 index += 1
                 dim = 0

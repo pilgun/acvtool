@@ -1,6 +1,6 @@
-import constants
-import insn35c
-from insn3rc import Insn3rc
+from .constants import INSN_FMT
+from .insn35c import Insn35c
+from .insn3rc import Insn3rc
 
 class InsnNode(object):
 
@@ -23,11 +23,11 @@ class InsnNode(object):
         self.buf = line
         segs = self.buf.split()
         self.opcode_name = segs[0] 
-        if constants.INSN_FMT.has_key(self.opcode_name):
-            self.fmt = constants.INSN_FMT[self.opcode_name]
+        if self.opcode_name in INSN_FMT:
+            self.fmt = INSN_FMT[self.opcode_name]
 
         if self.fmt == "35c":
-            self.obj = insn35c.Insn35c(line)
+            self.obj = Insn35c(line)
         elif self.fmt == "3rc":
             self.obj = Insn3rc(line)
 

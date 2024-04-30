@@ -1,5 +1,5 @@
-from config import config
-from granularity import Granularity
+from .config import config
+from .granularity import Granularity
 
 
 class AcvCommandParsers(object):

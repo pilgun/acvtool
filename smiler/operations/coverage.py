@@ -6,13 +6,16 @@ Input files: .pickle & .ec
 
 import logging
 import os
-import coverage
-import binaries
 from smiler.entities.coverage import CoverageData
+from . import coverage
+from . import binaries
 
 
 def cover_pickles(wd):
     ecs = wd.get_ecs()
+    if not ecs:
+        logging.info("No coverage files found")
+        return
     pkls = wd.get_pickles()
     covered_pkls = wd.get_covered_pickles() if os.path.exists(wd.covered_pickle_dir) else None
     total_cov_diff = CoverageData()

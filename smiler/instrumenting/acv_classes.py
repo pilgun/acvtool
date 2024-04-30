@@ -1,5 +1,5 @@
 import os
-from config import SINT16_MAX
+from .config import SINT16_MAX
 
 
 class AcvCalculator(object):

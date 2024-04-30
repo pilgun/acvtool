@@ -1,7 +1,7 @@
 import os
 import logging
 import javaobj
-import cPickle as pickle
+import pickle
 
 
 def read_ec(ec_path):

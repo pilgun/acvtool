@@ -2,13 +2,13 @@ import os
 import re
 import sys
 import logging
-from apkil import constants
+from .apkil import constants
 from pkg_resources import resource_filename
 from smiler.operations import binaries
-from utils import Utils
-from acv_classes import AcvReporter
+from .utils import Utils
+from .acv_classes import AcvReporter
 from ..granularity import Granularity
-from config import SINT16_MAX
+from .config import SINT16_MAX
 
 class Instrumenter(object):
     ''' Instrumenter consists of instrumenting code to track smali instructions in
@@ -364,7 +364,7 @@ class Instrumenter(object):
         if not is_static:
             move = "move-object/16 {}, {}".format(reg_map['p0'], 'p0')
             insns.append(move)
-        sorted_keys = sorted(reg_map.iterkeys(), key=lambda x: int(x[1:]))
+        sorted_keys = sorted(reg_map.keys(), key=lambda x: int(x[1:]))
         # p0 register is a link for self object if method is not static
         is_self_object = 1
         if is_static:
@@ -376,7 +376,7 @@ class Instrumenter(object):
         for i in range(len(method.paras)):
             p = sorted_keys[reg_index]
             v = reg_map[p]
-            if method.paras[i].basic and method.paras[i].dim is 0:
+            if method.paras[i].basic and method.paras[i].dim == 0:
                 if method.paras[i].words == 2:
                     move = "move-wide/16 %s, %s" % (v, p)
                     reg_index += 1

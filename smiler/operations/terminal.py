@@ -12,4 +12,4 @@ def request_pipe(cmd):
         raise Exception("----------------------------------------------------\n\
 Out: {}\nError: {}".format(out, err))
 
-    return res
+    return res.decode("ascii")

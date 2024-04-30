@@ -1,13 +1,13 @@
 import os
 import logging
 from six.moves import input
-import smiler
-from smiler import config
+from . import smiler
+from .config import config
 from cutter import shrinker
-from operations import coverage
-from instrumenting import apktool
-from entities.wd import WorkingDirectory
-from reporting.reporter import Reporter
+from .operations import coverage
+from .instrumenting import apktool
+from .entities.wd import WorkingDirectory
+from .reporting.reporter import Reporter
 
 
 

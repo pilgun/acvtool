@@ -1,8 +1,8 @@
 import logging
 import re
 from operator import attrgetter
-import returns
-from label_block import LBlock
+from . import returns
+from .label_block import LBlock
 from smiler.instrumenting.apkil.insnnode import InsnNode
 from smiler.instrumenting.apkil.labelnode import LabelNode
 

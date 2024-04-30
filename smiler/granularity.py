@@ -8,10 +8,13 @@ class Granularity(object):
         "method": METHOD, 
         "class": CLASS
     }
-    default = GRANULARITIES.keys()[0]
+    reverseGranularityDict = {v: k for k, v in GRANULARITIES.items()}
+
+    default = "instruction"
     
     def __init__(self, granularity="instruction"):
         self.granularity = Granularity.GRANULARITIES[granularity]
+        
     
     @staticmethod
     def granularities():
@@ -31,10 +34,7 @@ class Granularity(object):
 
     @staticmethod
     def get(granularity_key):
-        if granularity_key in Granularity.GRANULARITIES.values():
-            index = Granularity.GRANULARITIES.values().index(granularity_key)
-            return Granularity.GRANULARITIES.keys()[index]
-        raise WrongGranularityValueException
+        return Granularity.reverseGranularityDict[granularity_key]
     
 class WrongGranularityValueException(Exception):
     pass

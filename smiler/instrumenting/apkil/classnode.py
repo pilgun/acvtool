@@ -1,8 +1,8 @@
-import methodnode
+from .methodnode import MethodNode
 import sys
 import os
-from fieldnode import FieldNode
-from codeblocknode import CodeBlockNode
+from .fieldnode import FieldNode
+from .codeblocknode import CodeBlockNode
 
 class ClassNode(object):
 
@@ -110,7 +110,7 @@ class ClassNode(object):
                     if segs[0] == ".end" and segs[1] == "method":
                         break
                     line = f.readline()
-                self.methods.append(methodnode.MethodNode(lines))
+                self.methods.append(MethodNode(lines))
             elif segs[0] == ".annotation":
                 # there may be subannotations
                 lines = [line]

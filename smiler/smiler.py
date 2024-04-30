@@ -7,23 +7,22 @@ import signal
 import logging
 import time, sched
 import multiprocessing
-from config import config
-from datetime import datetime
-from granularity import Granularity
-from entities.wd import WorkingDirectory
-from instrumenting import manifest_instrumenter
-from instrumenting import apktool
-from instrumenting.smali_instrumenter import Instrumenter
-from instrumenting.utils import timeit
-from instrumenting.utils import Utils
-from instrumenting.acv_classes import AcvInstrumentation
-from instrumenting.apkil.smalitree import SmaliTree
-from instrumenting.acv_classes import AcvStoring
-from instrumenting.acv_classes import AcvCalculator
-from instrumenting.acv_classes import AcvFlushing
-from instrumenting.acv_classes import AcvReporter
-from operations import terminal
-from operations import adb
+from .config import config
+from .granularity import Granularity
+from .entities.wd import WorkingDirectory
+from .instrumenting import manifest_instrumenter
+from .instrumenting import apktool
+from .instrumenting.smali_instrumenter import Instrumenter
+from .instrumenting.utils import timeit
+from .instrumenting.utils import Utils
+from .instrumenting.acv_classes import AcvInstrumentation
+from .instrumenting.apkil.smalitree import SmaliTree
+from .instrumenting.acv_classes import AcvStoring
+from .instrumenting.acv_classes import AcvCalculator
+from .instrumenting.acv_classes import AcvFlushing
+from .instrumenting.acv_classes import AcvReporter
+from .operations import terminal
+from .operations import adb
 
 apk_info_pattern = re.compile("package: name='(?P<package>.*?)'")
 
@@ -65,10 +64,10 @@ def request_pipe(cmd):
     terminal.request_pipe(cmd)
 
 def get_apk_properties(path):
-    info_cmd = "%s dump badging %s" % (config.aapt_path, path)
+    info_cmd = "{} dump badging {}".format(config.aapt_path, path)
     out = terminal.request_pipe(info_cmd)
-    matched = re.match(apk_info_pattern, out)
 
+    matched = re.match(apk_info_pattern, out)
     package_name = matched.group('package')
     
     return apkinfo(package_name, "", "")

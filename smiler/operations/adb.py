@@ -1,7 +1,7 @@
 
 import os
 import time
-import terminal
+from . import terminal
 
 def install_multiple(apks):
     cmd = "adb install-multiple -r --no-incremental {}".format(" ".join(apks))

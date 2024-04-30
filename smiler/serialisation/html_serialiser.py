@@ -1,6 +1,6 @@
 import os
 import re
-import cgi
+import html
 from operator import attrgetter
 from chameleon import PageTemplateLoader
 from chameleon.utils import Markup
@@ -55,10 +55,10 @@ class HtmlSerialiser(object):
         return table
 
     def get_index_html(self, table, appname, title, package, respath, file_name):
-        html = self.index_template(table=Markup(table), appname=appname, title=title, 
+        htmlpage = self.index_template(table=Markup(table), appname=appname, title=title, 
         package=package, respath=respath, file_name=file_name, 
         granularity=Granularity.get(self.granularity), version=config.version)
-        return html
+        return htmlpage
 
     def save_dex_report(self, dex_coverages):
         Utils.copytree(config.html_resources_dir_path, self.resources_dir)
@@ -70,10 +70,10 @@ class HtmlSerialiser(object):
             rows.append(Markup(row))
             total_coverage_data.add_data(coverage_data)
         table = self.get_init_table(rows, total_coverage_data)
-        html = self.get_index_html(table, self.package, self.package, self.package, '', None)
+        htmlpage = self.get_index_html(table, self.package, self.package, self.package, '', None)
         path = os.path.join(self.output_dir, "main_index.html")
         with open(path, 'w') as f:
-            f.write(html)
+            f.write(htmlpage)
 
     def save_html(self, smalitree):
         report_dir = os.path.join(self.output_dir, str(smalitree.Id))
@@ -94,7 +94,7 @@ class HtmlSerialiser(object):
         class_path = os.path.join(dir, cl.file_name + '.html')
         buf = [Tag.Li(d) for d in cl.get_class_description()]
         buf.append(Tag.Li(''))
-        buf.extend([Tag.Li(cgi.escape(a)) for a in cl.get_annotations()])
+        buf.extend([Tag.Li(html.escape(a)) for a in cl.get_annotations()])
         buf.append(Tag.Li(''))
         buf.extend([Tag.Li(f) for f in cl.get_fields()])
         buf.append(Tag.Li(''))
@@ -105,7 +105,7 @@ class HtmlSerialiser(object):
             for i in range(len(m.insns)):
                 ins = m.insns[i]
                 if ins.covered:
-                    ins_buf.append(Tag.span_tab(cgi.escape(ins.buf), Tag.COV_CLASS))
+                    ins_buf.append(Tag.span_tab(html.escape(ins.buf), Tag.COV_CLASS))
                 else:
                     if ins.buf.startswith("return"):
                         lbl = HtmlSerialiser.get_first_lbl_by_index(labels, i)
@@ -115,15 +115,15 @@ class HtmlSerialiser(object):
                             ins_buf.append(Tag.span_tab(ins.buf))
                     else:
                         if m.insns[i].cover_code > -1 and not m.insns[i].covered:
-                            ins_buf.append(Tag.span_tab(cgi.escape(ins.buf), Tag.MISSED))
+                            ins_buf.append(Tag.span_tab(html.escape(ins.buf), Tag.MISSED))
                             continue
                         if i<len(m.insns)-1 and m.insns[i+1].covered and \
                             ( HtmlSerialiser.not_instr_regex.match(m.insns[i+1].buf) or \
                                 m.insns[i].buf.startswith("goto") or \
                                 m.insns[i].opcode_name == "packed-switch" ):
-                            ins_buf.append(Tag.span_tab(cgi.escape(ins.buf), Tag.EXEC_CLASS))
+                            ins_buf.append(Tag.span_tab(html.escape(ins.buf), Tag.EXEC_CLASS))
                         else:
-                            ins_buf.append(Tag.span_tab(cgi.escape(ins.buf)))
+                            ins_buf.append(Tag.span_tab(html.escape(ins.buf)))
             # insert labels and tries
             # sort the labels by index
             count = 0
@@ -147,12 +147,12 @@ class HtmlSerialiser(object):
             ins_buf.insert(0, Tag.Li(''))
             for a in m.annotations:
                 a.reload()
-                ins_buf[0:0] = [Tag.span_tab(cgi.escape(d)) for d in a.buf]
+                ins_buf[0:0] = [Tag.span_tab(html.escape(d)) for d in a.buf]
             for p in reversed(m.parameters):
                 p.reload()
                 ins_buf[0:0] = [Tag.span_tab(d) for d in p.buf]
             ins_buf.insert(0, Tag.span_tab(m.get_registers_line()))
-            html_method_line = cgi.escape(m.get_method_line())
+            html_method_line = html.escape(m.get_method_line())
             if m.ignore:
                 html_method_line = Tag.span(html_method_line, Tag.IGNORE_TAG)
             elif m.called:
@@ -165,14 +165,14 @@ class HtmlSerialiser(object):
         respath = '../'
         for i in range(slash_num):
             respath += '../'
-        html = self.class_template(code=Markup("\n".join(buf)), 
+        htmlpage = self.class_template(code=Markup("\n".join(buf)), 
                     appname=self.package, title=cl.file_name, 
                     package=Utils.get_standart_package_name(cl.name), 
                     respath=respath,
                     granularity=Granularity.get(self.granularity),
                     version=config.version)
         with open(class_path, 'w') as f:
-            f.write(html)
+            f.write(htmlpage)
 
 
     def save_packaged_coverage(self, report_dir, smalitree):
@@ -187,10 +187,10 @@ class HtmlSerialiser(object):
             rows.append(Markup(row))
             total_coverage_data.add_data(coverage_data)
         table = self.get_init_table(rows, total_coverage_data)
-        html = self.get_index_html(table, self.package, self.package, self.package, '../', None)
+        htmlpage = self.get_index_html(table, self.package, self.package, self.package, '../', None)
         path = os.path.join(report_dir, "main_index.html")
         with open(path, 'w') as f:
-            f.write(html)
+            f.write(htmlpage)
         return total_coverage_data
 
 
@@ -221,11 +221,11 @@ class HtmlSerialiser(object):
             rows.append(Markup(row))
             total_coverage_data.add_data(coverage_data)
         table = self.get_init_table(rows, total_coverage_data)
-        html = self.get_index_html(table, self.package, folder, package_name, respath, None)
+        htmlpage = self.get_index_html(table, self.package, folder, package_name, respath, None)
         rel_path = os.path.join(folder, 'index.html').replace('\\', '/')
         path = os.path.join(report_dir, rel_path).replace('\\', '/')
         with open(path, 'w') as f:
-            f.write(html)
+            f.write(htmlpage)
         return (package_name, rel_path, total_coverage_data)
 
 

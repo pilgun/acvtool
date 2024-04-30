@@ -1,7 +1,8 @@
-# ACVTool 2.0 Multidex
+# ACVTool 2.1 Multidex
 
 [![Software license](https://img.shields.io/github/license/pilgun/acvcut)](https://github.com/pilgun/acvcut/blob/master/LICENSE)
-[![Python version](https://img.shields.io/badge/-Python%202.7-yellow)](https://github.com/pilgun/acvcut/blob/master/LICENSE)
+[![Python version](https://img.shields.io/badge/Python-3)]()
+[![versions](https://img.shields.io/pypi/pyversions/pybadges.svg)]()
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4060443.svg)](https://doi.org/10.5281/zenodo.4060443)
 
 `acvtool.py` instruments an Android app and produces its code coverage without original source code. Code coverage is based on Smali representation of the bytecode.
@@ -12,7 +13,7 @@
 1. `Windows`/`OSX`/`Ubuntu`.
 3. `Java` version `1.8`.
 2. `Android SDK`.
-4. `Python` version  `2.7`.
+4. `Python 3`.
 
 ## Installation
 1. Run the `pip` command to install dependencies:
@@ -25,11 +26,6 @@
 
     When successfully installed, you will be able to execute `acv -h`. This command will create the working directory "\~/acvtool" and the configuration file "\~/acvtool/config.json". 
 
-    `acv` module may not work for you (confirmed on OSX), then run the ACVTool script right away:
-    ```shell
-    $ python acvtool.py -h
-    ```
-
 2. Specify absolute paths to the Android tools at "~/acvtool/config.json" (%userprofile%\acvtool\config.json in Windows) for the following variables.
     * AAPT
     * ZIPALIGN
@@ -40,7 +36,7 @@
 
     ```json
     {
-        "AAPT": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\25.0.1\\aapt.exe",
+        "AAPT": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\25.0.1\\aapt2.exe",
         "ZIPALIGN": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\25.0.1\\zipalign.exe",
         "ADB": "[%userprofile%]\\appdata\\local\\android\\sdk\\platform-tools\\adb.exe",
         "APKSIGNER": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\24.0.3\\apksigner.bat"
@@ -50,7 +46,7 @@
 
     ```json
     {
-        "AAPT": "[$HOME]/Library/Android/sdk/build-tools/25.0.3/aapt",
+        "AAPT": "[$HOME]/Library/Android/sdk/build-tools/25.0.3/aapt2",
         "ZIPALIGN": "[$HOME]/Library/Android/sdk/build-tools/25.0.3/zipalign",
         "ADB": "[$HOME]/Library/Android/sdk/platform-tools/adb",
         "APKSIGNER": "[$HOME]/Library/Android/sdk/build-tools/24.0.3/apksigner"
@@ -215,3 +211,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By sharing this code, the author of ACVTool does not grant or waive any patent rights beyond the scope of this ACVTool repository.
+
+## Aknowledgement
+
+The initial development of ACVTool took place at the University of Luxembourg as part of the FNR DroidMod 2016-2020 research project. This project would not have been possible without the invaluable support of my coauthors: Dr. Olga Gadyatskaya, Dr. Yury Zhauniarovich, and Prof. Dr. Sjouke Mauw.
