@@ -1,4 +1,4 @@
-# ACVTool
+# ACVTool 2.0 Multidex
 
 [![Software license](https://img.shields.io/github/license/pilgun/acvcut)](https://github.com/pilgun/acvcut/blob/master/LICENSE)
 [![Python version](https://img.shields.io/badge/-Python%202.7-yellow)](https://github.com/pilgun/acvcut/blob/master/LICENSE)
