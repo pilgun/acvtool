@@ -2,7 +2,7 @@ import codecs
 from xml.dom import minidom
 
 
-class AndroidManifest(object):
+class XMLManifest(object):
 
 
     def __init__(self, manifest_path):

@@ -11,6 +11,12 @@ def decode(apk_path, result_dir):
     cmd = "java -jar {} d {} -o {}".format(Libs.APKTOOL_PATH, apk_path, result_dir)
     terminal.request_pipe(cmd)
 
+def decode_no_res(apk_path, result_dir):
+    if os.path.exists(result_dir):
+        shutil.rmtree(result_dir)
+    cmd = f"java -jar {Libs.APKTOOL_PATH} d --no-res {apk_path} -o {result_dir}"
+    terminal.request_pipe(cmd)
+
 def unpack(apk_path, result_dir):
     cmd = "java -jar {} -r -s d {} -o {}".format(Libs.APKTOOL_PATH, apk_path, result_dir)
     terminal.request_pipe(cmd)

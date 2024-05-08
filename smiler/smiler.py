@@ -261,10 +261,9 @@ def instrument_apk(apk_path, result_dir, dbg_start=None, dbg_end=None, installat
     I assume that the result_dir is empty is checked.
     '''
     package = get_apk_properties(apk_path).package
-    logging.info("package: {}".format(package))
+    logging.info("decompiling: {}".format(package))
     wd = WorkingDirectory(package, result_dir)
-    apktool.decode(apk_path, wd.unpacked_apk)
-    logging.info("decompiled {0}".format(wd.package))
+    apktool.decode_no_res(apk_path, wd.unpacked_apk)
     smali_dirs = Utils.get_smali_dirs(wd.unpacked_apk) # smali_code_path
     instrument_app(wd, smali_dirs, dbg_start, dbg_end, installation, granularity, mem_stats, ignore_filter, keep_unpacked, target_cl, target_mtd)
     Utils.rm_if_exists(wd.instrumented_package_path)
@@ -320,9 +319,6 @@ def apply_ignore_filter(smali_tree, ignore_filter):
                 else:
                     smali_tree.class_ref_dict[klass].ignore = True
 
-
-def instrument_manifest(manifest_path):
-    manifest_instrumenter.instrument_manifest(manifest_path)
 
 # -- MULTIDEX
 def instrument_smali_code(input_smali_dirs, pickle_dir, package, granularity, dbg_start=None, dbg_end=None, mem_stats=None, ignore_filter=None, target_cl=None, target_mtd=None):
