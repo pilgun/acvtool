@@ -35,7 +35,8 @@ def instrument(args):
         keep_unpacked=args.keepsources,
         ignore_filter=args.stubs,
         target_cl=args.target_class,
-        target_mtd=args.method)
+        target_mtd=args.method,
+        target_dexs=[] if not args.dex else args.dex.split(","))
     if args.report:
     # onstop is deprecated due to missing get_execution_results
         smiler.start_instrumenting(package,
@@ -50,7 +51,7 @@ def install(args):
     smiler.install(args.apk_path)
 
 def uninstall(args):
-    smiler.install(args.apk_path)
+    smiler.uninstall(args.package_name)
 
 def activate(args):
     smiler.activate(args.package)
@@ -104,7 +105,7 @@ def report(args):
         ignore_filter=args.stubs, shrink=args.shrink)
 
 def sign(args):
-    smiler.sign_align_apk(args.apk_path, "{0}.signed.apk".format(args.apk_path))
+    smiler.patch_align_sign(args.apk_path, "{0}.signed.apk".format(args.apk_path))
 
 def build(args):
     smiler.build_dir(args.apktool_dir, args.result_dir, signature=args.s, installation=args.i)
@@ -114,6 +115,6 @@ def shrink(args):
     smiler.refresh_wd_no_smali(wd, args.apk_path)
     shrinker.shrink_smali(wd, wd.get_covered_pickles())
     apktool.build(wd.unpacked_apk, wd.instrumented_package_path)
-    smiler.sign_align_apk(wd.instrumented_package_path, wd.short_apk_path)
+    smiler.patch_align_sign(wd.instrumented_package_path, wd.short_apk_path)
     logging.info("shrinked apk was saved to {}".format(wd.short_apk_path))
 

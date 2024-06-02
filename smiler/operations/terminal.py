@@ -10,6 +10,6 @@ def request_pipe(cmd):
     
     if pipe.returncode > 0:
         raise Exception("----------------------------------------------------\n\
-Out: {}\nError: {}".format(out, err))
+Out: {}\nError: {}".format(out.decode(), err.decode()))
 
-    return res.decode("ascii")
+    return res.decode()

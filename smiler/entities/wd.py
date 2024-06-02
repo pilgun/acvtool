@@ -1,6 +1,7 @@
 import os
 
 from smiler.instrumenting.utils import Utils
+from smiler.instrumenting import config
 
 
 class WorkingDirectory(object):
@@ -33,6 +34,8 @@ class WorkingDirectory(object):
 
 
     def get_ecs(self):
+        if not os.path.exists(self.ec_dir):
+            raise Exception("No such directory: {}\nConsider: $ acv snap <package> - to generate coverage .ec files".format(self.ec_dir))
         ecs = {}
         for f in os.listdir(self.ec_dir):
             id = int(f.split("_")[2][:-3])
@@ -74,12 +77,16 @@ class WorkingDirectory(object):
 
 
     def __get_pickles(self, dir_path):
+        if not os.path.exists(dir_path):
+            raise Exception("No such directory: {}".format(dir_path))
         return {int(f.split("_")[1][:-7]): os.path.join(dir_path, f) for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))}
 
     def get_pickles(self):
         return self.__get_pickles(self.pickle_dir)
     
     def get_covered_pickles(self):
+        if not os.path.exists(self.covered_pickle_dir):
+            raise Exception("No such directory: {}\nConsider: $ acv cover-pickles <package>".format(self.covered_pickle_dir))
         return self.__get_pickles(self.covered_pickle_dir)
 
     def get_shrunk_pickles(self):
@@ -88,8 +95,8 @@ class WorkingDirectory(object):
     def get_smali_dirs(self, apk_dir):
         all_smali_dirs = Utils.get_smali_dirs(apk_dir)
         smali_dirs = {}
-        smali_dirs[1] = os.path.join(apk_dir, "smali")
+        smali_dirs[1] = os.path.join(apk_dir, config.smalidir_name)
         for i in range(2, len(all_smali_dirs)+1):
-            smali_dirs[i] = os.path.join(apk_dir, "smali_classes{}".format(i))
+            smali_dirs[i] = os.path.join(apk_dir, config.smalidir_name + str(i))
         return smali_dirs
 

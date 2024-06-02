@@ -3,19 +3,10 @@ import shutil
 import logging
 from time import time
 from datetime import datetime
+from . import config
 
 class Utils(object):
     ''' Static Helpers.'''
-
-    @staticmethod
-    def generate_smali_classes_dirs(unpacked_path, dex_number):
-        smali_dirs = {}
-        smali_dirs[1] = (os.path.join(unpacked_path, "smali"))
-        for i in range(2, dex_number+1):
-            pth = os.path.join(unpacked_path, "smali_classes{}".format(i))
-            smali_dirs[i] = pth
-            os.makedirs(pth)
-        return smali_dirs
 
     @staticmethod
     def rm_tree(path):
@@ -30,8 +21,8 @@ class Utils(object):
     
     @staticmethod
     def rm_if_exists(path):
-        logging.info("delete: " + path)
         if os.path.exists(path):
+            logging.info("delete: " + path)
             if os.path.isdir(path):
                 shutil.rmtree(path)
             else:
@@ -135,11 +126,11 @@ class Utils(object):
     def get_smali_dirs(unpacked_apk):
         i = 1
         smali_dirs = []
-        path = os.path.join(unpacked_apk, "smali")
+        path = os.path.join(unpacked_apk, config.smalidir_name)
         while os.path.exists(path):
             smali_dirs.append(path)
             i += 1
-            path = os.path.join(unpacked_apk, "smali_classes" + str(i))
+            path = os.path.join(unpacked_apk, config.smalidir_name + str(i))
         return smali_dirs
 
 

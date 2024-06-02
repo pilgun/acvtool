@@ -7,8 +7,9 @@ from . import basic_block
 
 def shrink_smali(wd, pickle_files):
     '''Saves shrunk version of smali files.
-       We remove not executed classes, methods and instructions.
-       This code may not compile because some instructions still reference removed classes.      
+       This implementation only removes not executed classes, methods and instructions in a dull way.
+       The resulting code may not compile because some instructions still reference removed classes.
+       ACVCut implementation was more sophisticated targeting to keep the shrunk app executable.
     '''
     smali_dirs = Utils.get_smali_dirs(wd.unpacked_apk)
     if smali_dirs:
@@ -29,6 +30,7 @@ def shrink_smali(wd, pickle_files):
 def shrink_smalitree(smalitree):
     remove_not_executed_methods_and_classes(smalitree)
     basic_block.remove_blocks_from_selected_method(smalitree)
+
 
 def remove_not_executed_methods_and_classes(smalitree):
     '''Remove not executed methods and classes (for visualisation only).'''

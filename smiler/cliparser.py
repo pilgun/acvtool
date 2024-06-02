@@ -52,6 +52,9 @@ class AcvCommandParsers(object):
         parser_instrument.add_argument("-m", "--method", metavar="<method>", required=False,
                 help="Instrument specific method, e.g. 'void android.support.multidex.a.g(android.content.Context)'.",
                 default=None)
+        parser_instrument.add_argument("-dex", "--dex", metavar="<dex>", required=False,
+                help="Instrument specific dex file, e.g. 'classes2.dex'.",
+                default=None)
 
     def install(self):
         parser_install = self.subparsers.add_parser("install", help="Installs an apk")

@@ -1,4 +1,4 @@
-PyYAML==6.0
+PyYAML==6.0.1
 Chameleon==4.5.4
 lxml==4.9.2
 javaobj-py3==0.4.4

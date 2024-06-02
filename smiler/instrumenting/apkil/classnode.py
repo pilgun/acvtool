@@ -93,8 +93,9 @@ class ClassNode(object):
                         lines.extend(annotation_lines)
                         lines.append(line)
                     else:
-                        # when annotations are not included inside the field
-                        self.annotations.append(CodeBlockNode(annotation_lines))
+                        if annotation_lines:
+                            # when annotations are not included inside the field
+                            self.annotations.append(CodeBlockNode(annotation_lines))
                 self.fields.append(FieldNode(lines))
                 continue
             elif segs[0] == ".method":

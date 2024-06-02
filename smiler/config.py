@@ -37,8 +37,9 @@ class config(object):
     adb_path = config_data["ADB"]
     aapt_path = config_data["AAPT"]
     zipalign = config_data["ZIPALIGN"]
+    acvpatcher = config_data["ACVPATCHER"]
 
-    version = "2.2"
+    version = "2.3"
     logging_yaml = resource_filename('smiler.resources', 'logging.yaml')
 
     default_working_dir = os.path.join(dir_path, "acvtool_working_dir")
@@ -74,6 +75,9 @@ class config(object):
         if not os.path.exists(config.zipalign):
             err = True
             logging.error("zipalign was not found at {}".format(config.zipalign))
+        if not os.path.exists(config.acvpatcher):
+            err = True
+            logging.error("acvpatcher was not found at {}".format(config.acvpatcher))
         if err:
             logging.error("\nCONFIGURATION ERROR: Please check paths at {} or/and install required software (consult README.md for details).\n".format(config.config_path))
             sys.exit()

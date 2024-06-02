@@ -2,5 +2,6 @@
   "AAPT": "aapt_path",
   "ZIPALIGN": "zipalign_path",
   "ADB": "adb_path",
-  "APKSIGNER": "apksigner_path"
+  "APKSIGNER": "apksigner_path",
+  "ACVPATCHER": "acvpatcher_path"
 }
