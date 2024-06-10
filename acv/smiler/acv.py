@@ -1,6 +1,5 @@
 import os
 import logging
-from six.moves import input
 from . import smiler
 from .config import config
 from cutter import shrinker

@@ -1,9 +1,9 @@
 import yaml
 import argparse
 from logging import config as logging_config
-from smiler import acv, cliparser
-from smiler.cliparser import AcvCommandParsers
-from smiler.config import config
+from .smiler import acv, cliparser
+from .smiler.cliparser import AcvCommandParsers
+from .smiler.config import config
 
 
 def setup_logging():
