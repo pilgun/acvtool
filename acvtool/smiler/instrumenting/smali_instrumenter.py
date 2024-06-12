@@ -22,7 +22,7 @@ class Instrumenter(object):
 
     
     dir_path = sys.path[0]
-    instrumentation_smali_path = resource_filename('acv.smiler.resources.instrumentation', 'smali')
+    instrumentation_smali_path = resource_filename('acvtool.smiler.resources.instrumentation', 'smali')
 
     def __init__(self, smalitree, granularity, package, dbg_start=None, dbg_end=None, mem_stats=None, target_cl=None, target_mtd=None):
         self.smalitree = smalitree

@@ -16,7 +16,7 @@ class config(object):
         os.makedirs(dir_path)
     config_path = os.path.join(dir_path, 'config.json')
     if not os.path.exists(config_path):
-        shutil.copy(resource_filename("acv.smiler", "config.json"), config_path)
+        shutil.copy(resource_filename("acvtool.smiler", "config.json"), config_path)
         logging.info("config.json config was created in the {}.".format(dir_path))
     with open(config_path) as json_file:
         config_data = json.load(json_file)
@@ -27,10 +27,10 @@ class config(object):
 
     INSTRUMENTING_NAME = "tool.acv.AcvInstrumentation"
     
-    instrumenting_class_dir_path = resource_filename('acv.smiler.resources.instrumentation', 'smali')
-    html_resources_dir_path = resource_filename('acv.smiler.resources.html', '.resources')
-    templates_path = resource_filename('acv.smiler.resources.html', 'templates')
-    keystore_path = resource_filename('acv.smiler', 'keystore')
+    instrumenting_class_dir_path = resource_filename('acvtool.smiler.resources.instrumentation', 'smali')
+    html_resources_dir_path = resource_filename('acvtool.smiler.resources.html', '.resources')
+    templates_path = resource_filename('acvtool.smiler.resources.html', 'templates')
+    keystore_path = resource_filename('acvtool.smiler', 'keystore')
     keystore_password = '123456'
     
     apksigner_path = config_data["APKSIGNER"]
@@ -40,7 +40,7 @@ class config(object):
     acvpatcher = config_data["ACVPATCHER"]
 
     version = "2.3"
-    logging_yaml = resource_filename('acv.smiler.resources', 'logging.yaml')
+    logging_yaml = resource_filename('acvtool.smiler.resources', 'logging.yaml')
 
     default_working_dir = os.path.join(dir_path, "acvtool_working_dir")
     default_report_dir = os.path.join(default_working_dir, "report")

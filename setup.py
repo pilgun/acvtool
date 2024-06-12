@@ -7,7 +7,7 @@ setup(
     author_email='alexand.pilgun@gmail.com',
     description="ACVTool is an instrumentation-based tool to measure and visualize instruction coverage for Android apps.",
     url='https://github.com/pilgun/acvtool',
-    packages=['acv'],
+    packages=['acvtool'],
     install_requires=[
         'PyYAML==6.0.1',
         'Chameleon==4.5.4',
@@ -20,7 +20,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'acv=acv.acvtool:main',
+            'acv=acvtool.acvtool:main',
         ]
     },
     classifiers=[
