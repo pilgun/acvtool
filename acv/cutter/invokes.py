@@ -1,5 +1,5 @@
 import re
-
+from ..smiler.instrumenting.apkil.constants import BASIC_TYPES
 
 rx = r"^invoke-(direct|super)"
 
