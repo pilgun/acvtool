@@ -1,7 +1,7 @@
 import logging
-from smiler.instrumenting.smali_instrumenter import Instrumenter
-from smiler.instrumenting.utils import Utils
-from smiler.operations import binaries
+from ..smiler.instrumenting.smali_instrumenter import Instrumenter
+from ..smiler.instrumenting.utils import Utils
+from ..smiler.operations import binaries
 from . import basic_block
 
 

@@ -3,8 +3,8 @@ import re
 from operator import attrgetter
 from . import returns
 from .label_block import LBlock
-from smiler.instrumenting.apkil.insnnode import InsnNode
-from smiler.instrumenting.apkil.labelnode import LabelNode
+from ..smiler.instrumenting.apkil.insnnode import InsnNode
+from ..smiler.instrumenting.apkil.labelnode import LabelNode
 
 # matched examples
 #.catch Landroid/content/res/Resources$NotFoundException; {:try_start_0 .. :try_end_0} :catch_0

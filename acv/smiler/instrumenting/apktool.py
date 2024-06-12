@@ -1,7 +1,7 @@
 import logging
 import shutil
 import os
-from smiler.operations import terminal
+from ..operations import terminal
 from ..libs.libs import Libs
 
 def decode(apk_path, result_dir):

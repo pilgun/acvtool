@@ -6,7 +6,7 @@ Input files: .pickle & .ec
 
 import logging
 import os
-from smiler.entities.coverage import CoverageData
+from ..entities.coverage import CoverageData
 from . import coverage
 from . import binaries
 

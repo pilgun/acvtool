@@ -1,7 +1,7 @@
 import os
 
-from smiler.instrumenting.utils import Utils
-from smiler.instrumenting import config
+from ..instrumenting.utils import Utils
+from ..instrumenting import config
 
 
 class WorkingDirectory(object):

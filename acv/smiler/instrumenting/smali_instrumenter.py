@@ -5,7 +5,7 @@ import logging
 
 from .apkil import constants
 from pkg_resources import resource_filename
-from smiler.operations import binaries
+from ..operations import binaries
 from .utils import Utils
 from .core.acv_classes import AcvReporter
 from ..granularity import Granularity

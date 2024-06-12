@@ -2,7 +2,7 @@ import os
 import logging
 from . import smiler
 from .config import config
-from cutter import shrinker
+from ..cutter import shrinker
 from .operations import coverage
 from .instrumenting import apktool
 from .entities.wd import WorkingDirectory

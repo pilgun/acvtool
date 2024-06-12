@@ -1,6 +1,6 @@
 import logging
 import os
-from smiler.operations import terminal
+from ..operations import terminal
 from ..libs.libs import Libs
 
 def decode(unpacked_apk, dex_filenames, remove_dex=False):

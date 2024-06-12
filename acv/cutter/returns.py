@@ -1,4 +1,4 @@
-from smiler.instrumenting.apkil.insnnode import InsnNode
+from ..smiler.instrumenting.apkil.insnnode import InsnNode
 
 constructor_ins1 = InsnNode(r"invoke-direct/range {p0 .. p0}, Ljava/lang/Object;-><init>()V")
 constructor_ins2 = InsnNode("return-void")

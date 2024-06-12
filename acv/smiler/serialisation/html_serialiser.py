@@ -4,10 +4,10 @@ import html
 from operator import attrgetter
 from chameleon import PageTemplateLoader
 from chameleon.utils import Markup
-from smiler.instrumenting.utils import Utils
-from smiler.config import config
-from smiler.granularity import Granularity
-from smiler.entities.coverage import CoverageData
+from ..instrumenting.utils import Utils
+from ..config import config
+from ..granularity import Granularity
+from ..entities.coverage import CoverageData
 
 
 class HtmlSerialiser(object):

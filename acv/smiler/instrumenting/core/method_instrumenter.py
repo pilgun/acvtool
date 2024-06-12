@@ -1,7 +1,7 @@
 import re
 from .acv_classes import AcvReporter
-from smiler.granularity import Granularity
-from smiler.instrumenting.utils import Utils
+from ...granularity import Granularity
+from ...instrumenting.utils import Utils
 from ..config import SINT16_MAX
 
 class MethodInstrumenter(object):

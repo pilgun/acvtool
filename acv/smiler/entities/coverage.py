@@ -1,5 +1,5 @@
 import logging
-from smiler.granularity import Granularity
+from ..granularity import Granularity
 
 
 class CoverageData(object):

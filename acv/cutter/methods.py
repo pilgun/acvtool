@@ -1,8 +1,4 @@
-import os, sys
 import returns
-from smiler.instrumenting.apkil.constants import BASIC_TYPES
-from smiler.instrumenting.apkil.insnnode import InsnNode
-
 
 def clean_not_executed_methods(smalitree):
     stub_methods = set()

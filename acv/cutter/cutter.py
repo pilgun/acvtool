@@ -1,4 +1,4 @@
-from smiler.instrumenting.apkil.insnnode import InsnNode
+from ..smiler.instrumenting.apkil.insnnode import InsnNode
 
 
 def remove_not_covered_instructions(smalitree):
