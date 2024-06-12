@@ -17,7 +17,7 @@ def decode(unpacked_apk, dex_filenames, remove_dex=False):
 
 def decode_single_dex(dex_path, smali_dir):
     os.makedirs(smali_dir, exist_ok=True)
-    cmd = "java -jar {} disassemble {} -o {} -l".format(Libs.BAKSMALI_PATH, dex_path, smali_dir)
+    cmd = "java -jar '{}' disassemble '{}' -o '{}' -l".format(Libs.BAKSMALI_PATH, dex_path, smali_dir)
     terminal.request_pipe(cmd)
     return smali_dir
 
@@ -27,7 +27,7 @@ def build(smali_dirs):
         dex_path = smali_dir_path + ".dex"
         if os.path.exists(dex_path):
             os.remove(dex_path)
-        cmd = "java -jar {} assemble {} -o {}".format(Libs.SMALI_PATH, smali_dir_path, dex_path)
+        cmd = "java -jar '{}' assemble '{}' -o '{}'".format(Libs.SMALI_PATH, smali_dir_path, dex_path)
         terminal.request_pipe(cmd)
         logging.info("built dex file: {}".format(dex_path))
         dex_filepaths.append(dex_path)

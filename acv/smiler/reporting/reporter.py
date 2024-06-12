@@ -1,15 +1,12 @@
 import os
 
-from acv import smiler
-from ..config import config
+from .. import smiler
 import logging
-from ..operations import binaries, coverage
-from ..entities.wd import WorkingDirectory
+from ..operations import binaries
 from ..granularity import Granularity
-from ..instrumenting.utils import Utils as Utils2
 from ..serialisation.html_serialiser import HtmlSerialiser
 from ..serialisation.xml_serialiser import XmlSerialiser
-from ...cutter import basic_block, shrinker
+from ...cutter import shrinker
 
 
 class Reporter(object):

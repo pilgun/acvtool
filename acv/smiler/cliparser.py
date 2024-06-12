@@ -77,7 +77,7 @@ class AcvCommandParsers(object):
                 help="The name of adb device/emulator.", default=None, dest="device")
 
     def start(self):
-        parser_start = self.subparsers.add_parser("start", help="Starts runtime coverage data collection")
+        parser_start = self.subparsers.add_parser("start", help="Starts the instrumentation process for the app")
         parser_start.add_argument("package_name", metavar="<package.name>")
         parser_start.add_argument("-q", "--q", action="store_true", required=False,
                 help="Releases the thread. Requires to call 'stop' command after the tests were completed.")
@@ -95,7 +95,7 @@ class AcvCommandParsers(object):
                 help="The name of adb device/emulator.", default=None, dest="device")
 
     def stop(self):
-        parser_stop = self.subparsers.add_parser("stop", help="Stops runtime coverage data collection")
+        parser_stop = self.subparsers.add_parser("stop", help="Stops the instrumentation process")
         parser_stop.add_argument("package_name", metavar="<package.name>")
         parser_stop.add_argument("-t", "--timeout", metavar="<timeout>", required=False,
             help="Waiting time for coverage file preparing.",
@@ -104,13 +104,13 @@ class AcvCommandParsers(object):
                 help="The name of adb device/emulator.", default=None, dest="device")
 
     def flush(self):
-        parser_flush = self.subparsers.add_parser("flush", help="Resets arrays with execution information on the app side")
+        parser_flush = self.subparsers.add_parser("flush", help="Resets instruction tracking")
         parser_flush.add_argument("package_name", metavar="<package.name>")
         parser_flush.add_argument("-d", "--device", metavar="<device>", required=False,
             help="The name of adb device/emulator.", default=None, dest="device")
 
     def calculate(self):
-        parser_calculate = self.subparsers.add_parser("calculate", help='Calculates current coverage (mixed methods and instructions probes) and sends to logcat.')
+        parser_calculate = self.subparsers.add_parser("calculate", help='Calculates current probes coverage (adb logcat ACV:V "*:S")')
         parser_calculate.add_argument("package_name", metavar="<package.name>")
         parser_calculate.add_argument("-d", "--device", metavar="<device>", required=False,
             help="The name of adb device/emulator.", default=None, dest="device")
@@ -126,7 +126,7 @@ class AcvCommandParsers(object):
                 help="Path to the directory where the working data is stored")
     
     def cover_pickles(self):
-        cover_parser = self.subparsers.add_parser("cover-pickles", help="Apply coverage information (.ec) onto pickle files (code trees). We just process files in the working directory.")
+        cover_parser = self.subparsers.add_parser("cover-pickles", help="Apply coverage information (.ec) onto pickle files (code trees). We process files from the working directory.")
         cover_parser.add_argument("package_name", metavar="<package.name>")
         cover_parser.add_argument("-d", "--device", metavar="<device>", required=False,
                 help="The name of adb device/emulator.", default=None, dest="device")
