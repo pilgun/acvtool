@@ -43,11 +43,11 @@
 
     ```json
     {
-        "AAPT": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\25.0.1\\aapt2.exe",
-        "ZIPALIGN": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\25.0.1\\zipalign.exe",
-        "ADB": "[%userprofile%]\\appdata\\local\\android\\sdk\\platform-tools\\adb.exe",
-        "APKSIGNER": "[%userprofile%]\\appdata\\local\\android\\sdk\\build-tools\\24.0.3\\apksigner.bat",
-        "ACVPATCHER": "D:\\distr\\acvpatcher.exe"
+        "AAPT": "C:/users/ME/appdata/local/android/sdk/build-tools/25.0.1/aapt2.exe",
+        "ZIPALIGN": "C:/users/ME/appdata/local/android/sdk/build-tools/25.0.1/zipalign.exe",
+        "ADB": "C:/users/ME/appdata/local/android/sdk/platform-tools/adb.exe",
+        "APKSIGNER": "C:/users/ME/appdata/local/android/sdk/build-tools/24.0.3/apksigner.bat",
+        "ACVPATCHER": "D:/distr/acvpatcher.exe"
     }
     ```
     3.2. OSX, Linux configuration example

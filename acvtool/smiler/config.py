@@ -3,6 +3,7 @@ import sys
 import shutil
 import json
 import logging
+from pathlib import Path
 
 from pkg_resources import resource_filename
 from os.path import expanduser
@@ -33,11 +34,11 @@ class config(object):
     keystore_path = resource_filename('acvtool.smiler', 'keystore')
     keystore_password = '123456'
     
-    apksigner_path = config_data["APKSIGNER"]
-    adb_path = config_data["ADB"]
-    aapt_path = config_data["AAPT"]
-    zipalign = config_data["ZIPALIGN"]
-    acvpatcher = config_data["ACVPATCHER"]
+    apksigner_path = Path(config_data["APKSIGNER"])
+    adb_path = Path(config_data["ADB"])
+    aapt_path = Path(config_data["AAPT"])
+    zipalign = Path(config_data["ZIPALIGN"])
+    acvpatcher = Path(config_data["ACVPATCHER"])
 
     version = "2.3"
     logging_yaml = resource_filename('acvtool.smiler.resources', 'logging.yaml')

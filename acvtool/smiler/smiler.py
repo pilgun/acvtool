@@ -33,7 +33,7 @@ CRASH_REPORT_FILENAME = "errors.txt"
 
 def install(new_apk_path):
     logging.info("installing {}".format(os.path.basename(new_apk_path)))
-    cmd = "'{}' install -r --no-incremental '{}'".format(config.adb_path, new_apk_path)
+    cmd = '"{}" install -r --no-incremental "{}"'.format(config.adb_path, new_apk_path)
     out = terminal.request_pipe(cmd)
     
     logging.info(out)
@@ -57,7 +57,7 @@ def install_multiple(apks):
 
 def uninstall(package):
     logging.info("uninstalling")
-    cmd = "'{}' uninstall '{}'".format(config.adb_path, package)
+    cmd = '"{}"" uninstall "{}"'.format(config.adb_path, package)
     out = terminal.request_pipe(cmd)
 
     logging.info(out)
@@ -68,7 +68,7 @@ def request_pipe(cmd):
 
 
 def get_apk_properties(path):
-    info_cmd = "'{}' dump badging '{}'".format(config.aapt_path, path)
+    info_cmd = '"{}" dump badging "{}"'.format(config.aapt_path, path)
     out = terminal.request_pipe(info_cmd)
 
     matched = re.match(apk_info_pattern, out)
@@ -209,19 +209,19 @@ def stop_instrumenting(package_name, timeout=None):
 # refactor: to put this in a separate controller
 def flush(package_name):
     logging.info("flush")
-    cmd = "'{}' shell am broadcast -a 'tool.acv.flush' -p '{}'".format(config.adb_path, package_name)
+    cmd = '"{}" shell am broadcast -a "tool.acv.flush" -p "{}"'.format(config.adb_path, package_name)
     result = subprocess.call(cmd, shell=True)
 
 
 def calculate(package_name):
     logging.info('calculate (see for "ACV" tag in logcat)')
-    cmd = "'{}' shell am broadcast -a 'tool.acv.calculate' -p '{}'".format(config.adb_path, package_name)
+    cmd = '"{}" shell am broadcast -a "tool.acv.calculate" -p "{}"'.format(config.adb_path, package_name)
     result = subprocess.call(cmd, shell=True)
 
 
 def snap(package_name, i=0, output=None):
     logging.info("ec: {}".format(i))
-    snap_cmd = "'{}' shell am broadcast -a 'tool.acv.snap' -p '{}'".format(config.adb_path, package_name)
+    snap_cmd = '"{}" shell am broadcast -a "tool.acv.snap" -p "{}"'.format(config.adb_path, package_name)
     result = subprocess.call(snap_cmd, shell=True)
 
     if output:

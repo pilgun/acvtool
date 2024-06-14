@@ -188,7 +188,7 @@ class MethodInstrumenter(object):
             line = insn.get_line()
             if not line.startswith('.'):
                 # regex examples: " p0", " p1", " p2"
-                matched = re.findall('\s(p\d+)(?:,|$)', line)
+                matched = re.findall(r'\s(p\d+)(?:,|$)', line)
                 if len(matched) > 0:
                     line = MethodInstrumenter.replace_registers(line, matched, reg_map)
         return line

@@ -12,12 +12,12 @@ class Utils(object):
     def rm_tree(path):
         '''Removes all the files.'''
         if os.path.isdir(path):
-            if os.name == 'nt':
-                #Hack for Windows. Shutil can't remove files with a path longer than 260.
-                cmd = "rd '{0}' /s /q".format(path)
-                os.system(cmd)
-            else:
-                shutil.rmtree(path) 
+            # if os.name == 'nt':
+            #     #Hack for Windows. Shutil can't remove files with a path longer than 260.
+            #     cmd = "rd '{0}' /s /q".format(path)
+            #     os.system(cmd)
+            # else:
+            shutil.rmtree(path) 
     
     @staticmethod
     def rm_if_exists(path):
