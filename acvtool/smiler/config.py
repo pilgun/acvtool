@@ -40,7 +40,7 @@ class config(object):
     zipalign = Path(config_data["ZIPALIGN"])
     acvpatcher = Path(config_data["ACVPATCHER"])
 
-    version = "2.3.1"
+    version = "2.3.2"
     logging_yaml = resource_filename('acvtool.smiler.resources', 'logging.yaml')
 
     default_working_dir = os.path.join(dir_path, "acvtool_working_dir")
