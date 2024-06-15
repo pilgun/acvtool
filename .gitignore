@@ -4,6 +4,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 acvtool.egg-info/
+build/
 log.log
 times_log.csv
 wd*/

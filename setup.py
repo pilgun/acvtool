@@ -2,12 +2,22 @@ from setuptools import setup, find_packages
 
 setup(
     name='acvtool',
-    version='2.3',
+    version='2.3.1',
     author='Aleksandr Pilgun',
     author_email='alexand.pilgun@gmail.com',
     description="ACVTool is an instrumentation-based tool to measure and visualize instruction coverage for Android apps.",
     url='https://github.com/pilgun/acvtool',
-    packages=['acvtool'],
+    packages=find_packages(),
+    package_data={
+        'acvtool': [
+            'smiler/libs/jars/*',
+            'smiler/resources/logging.yaml',
+            'smiler/resources/html/.resources/*',
+            'smiler/resources/html/.resources/highlight/*',
+            'smiler/resources/html/.resources/highlight/styles/*',
+            'smiler/resources/html/templates/*',
+            'smiler/resources/instrumentation/smali/tool/acv/*',
+    ],},
     install_requires=[
         'PyYAML==6.0.1',
         'Chameleon==4.5.4',
