@@ -6,13 +6,11 @@ from ..libs.libs import Libs
 def decode(unpacked_apk, dex_filenames, remove_dex=False):
     smali_dirpaths = []
     for dex in dex_filenames:
-        dex_name = dex.replace(".dex", "")
-        dex_path = os.path.join(unpacked_apk, dex)
-        smali_dir = os.path.join(unpacked_apk, dex_name)
+        smali_dir = dex.replace(".dex", "")
         smali_dirpaths.append(smali_dir)
-        decode_single_dex(dex_path, smali_dir)
+        decode_single_dex(dex, smali_dir)
         if remove_dex:
-            os.remove(dex_path)
+            os.remove(dex)
     return smali_dirpaths
 
 def decode_single_dex(dex_path, smali_dir):
