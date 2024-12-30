@@ -1,11 +1,10 @@
 # ACVTool 2.3.2 Multidex
 
-[![Software license](https://img.shields.io/github/license/pilgun/acvcut)](https://github.com/pilgun/acvcut/blob/master/LICENSE)
-[![Python version](https://img.shields.io/badge/Python-3)]()
-[![versions](https://img.shields.io/pypi/pyversions/pybadges.svg)]()
+[![Python version](https://img.shields.io/pypi/pyversions/acvtool?color=%2300bf55)]()
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4060443.svg)](https://doi.org/10.5281/zenodo.4060443)
+[![Arsenal](https://github.com/toolswatch/badges/blob/master/arsenal/europe/2024.svg)](https://www.blackhat.com/eu-24/arsenal/schedule/index.html#acvtool--multidex-41926)
 
-`acvtool.py` instruments an Android app and produces its code coverage without original source code. Code coverage is based on Smali representation of the bytecode.
+ACVTool measures code coverage and highlights executed instructions in an Android app. ACVTool operates on the Smali representation of the bytecode.
 
 [Demonstration video of ACVTool](https://www.youtube.com/watch?v=xyaR4Ivrij0).
 
@@ -18,21 +17,26 @@
 ## Installation
 1. Run the `pip` command to install dependencies:
 
+    From PYPI
+    ```shell
+    $ pip install acvtool==2.3.2
+    ```
+    Or from sources
     ```shell
     $ cd acvtool
     $ pip install -e .
     $ acv -h
     ```
-
+   
     When successfully installed, you will be able to execute `acv -h`. This command will create the working directory "\~/acvtool" and the configuration file "\~/acvtool/config.json". 
 
-2. Download the [ACVPatcher](https://github.com/pilgun/acvpatcher/releases) binary for your system. ACVPatcher replaces usage of Apktool, zipalign, apksigner. ACVPatcher is a separated binary since it was implemented with .NET Core.
+1. Download the [ACVPatcher](https://github.com/pilgun/acvpatcher/releases) binary for your system. ACVPatcher replaces usage of Apktool, zipalign, apksigner. ACVPatcher is a separated binary since it was implemented with .NET Core.
 
     ACVPatcher needs to be trusted to work:
     - (OSX/Linux) `chmod +x acvpatcher`
     - Call the Context Menu, Tap Open, Open the App From Not Trusted Developer
 
-3. Specify absolute paths to the Android tools at "~/acvtool/config.json" (%userprofile%\acvtool\config.json in Windows) for the following variables.
+2. Specify absolute paths to the Android tools at "~/acvtool/config.json" (%userprofile%\acvtool\config.json in Windows) for the following variables.
     * AAPT
     * ZIPALIGN
     * ADB
