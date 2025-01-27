@@ -6,7 +6,7 @@
 
 ACVTool measures code coverage and highlights executed instructions in an Android app. ACVTool operates on the Smali representation of the bytecode.
 
-[Demonstration video of ACVTool](https://www.youtube.com/watch?v=xyaR4Ivrij0).
+[Demonstration video of ACVTool](https://youtu.be/0GLyqFdxboQ).
 
 ## Prerequisites
 1. `Windows`/`OSX`/`Ubuntu`.
