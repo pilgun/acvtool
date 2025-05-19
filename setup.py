@@ -26,7 +26,7 @@ setup(
         'androguard==4.0.2',
         'pyaxml==0.0.5',
         'typing_extensions==4.7.1',
-        'setuptools==70.0.0'
+        'setuptools==78.1.1'
     ],
     entry_points={
         'console_scripts': [
