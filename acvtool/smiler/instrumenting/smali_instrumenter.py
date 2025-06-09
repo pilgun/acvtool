@@ -4,14 +4,10 @@ import sys
 import logging
 
 from .apkil import constants
-from pkg_resources import resource_filename
+from ..config import config
 from ..operations import binaries
 from .utils import Utils
-from .core.acv_classes import AcvReporter
 from ..granularity import Granularity
-
-from .config import prefix_smdir_name_len
-from .config import smalidir_name
 from .core.method_instrumenter import MethodInstrumenter
 from .core.class_instrumenter import ClassInstrumenter
 
@@ -20,9 +16,9 @@ class Instrumenter(object):
     ''' Instrumenter consists of instrumenting code to track smali instructions in
     smalitree.'''
 
-    
+
     dir_path = sys.path[0]
-    instrumentation_smali_path = resource_filename('acvtool.smiler.resources.instrumentation', 'smali')
+    instrumentation_smali_path = config.get_resource('acvtool.smiler.resources.instrumentation', 'smali')
 
     def __init__(self, smalitree, granularity, package, dbg_start=None, dbg_end=None, mem_stats=None, target_cl=None, target_mtd=None):
         self.smalitree = smalitree

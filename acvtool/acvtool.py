@@ -2,14 +2,14 @@ import yaml
 import argparse
 import logging
 from logging import config as logging_config
-from .smiler import acv, cliparser
+from .smiler import acv
 from .smiler.cliparser import AcvCommandParsers
 from .smiler.config import config
 
 
 def setup_logging():
-    with open(config.logging_yaml) as f:
-        logging_config.dictConfig(yaml.safe_load(f.read()))
+    with open(config.get_logging_yaml()) as f:
+        logging_config.dictConfig(yaml.safe_load(f))
 
 def run_actions(parser, args=None):
     """
