@@ -345,7 +345,7 @@ def cover_catch_labels(method):
             and method.insns[ins_ind].covered:
             method.labels[lb].covered = True
 
-LABELS_REG = "^(?:\.catch|if|go|pack|spar|fill).+ \:(\w+\_*\d*)$"
+LABELS_REG = r"^(?:\.catch|if|go|pack|spar|fill).+ \:(\w+\_*\d*)$"
 
 def check_if_labels_referenced(method):
     lbl_set = set()

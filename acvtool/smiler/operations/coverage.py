@@ -69,8 +69,14 @@ def cover_tree(st, ec_coverage):
                 # if m.cover_code > -1 and not m.called and cov_class[m.cover_code]:
                 #     print("{}->{}".format(cl.name, m.descriptor))
                 m.called = m.cover_code > -1 and (m.called or cov_class[m.cover_code])
+                prev_ins = None
                 for ins in m.insns:
                     ins.covered = ins.cover_code > -1 and (ins.covered or cov_class[ins.cover_code])
+                    ## simplistic analysis to mark invoke- instructions as covered
+                    ## (conflicting with method.covered() logic that counts only tracking instructions)
+                    # if ins.covered and prev_ins and prev_ins.cover_code == -1 and ins.buf.startswith('move-result'):
+                    #     prev_ins.covered = True
+                    # prev_ins = ins
                 for lbl in m.labels.values():
                     lbl.covered = lbl.cover_code > -1 and (lbl.covered or cov_class[lbl.cover_code])
 

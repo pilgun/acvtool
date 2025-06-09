@@ -1,4 +1,4 @@
-# ACVTool 2.3.2 Multidex
+# ACVTool 2.3.3 Multidex
 
 [![Python version](https://img.shields.io/pypi/pyversions/acvtool?color=%2300bf55)]()
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4060443.svg)](https://doi.org/10.5281/zenodo.4060443)
@@ -19,7 +19,7 @@ ACVTool measures code coverage and highlights executed instructions in an Androi
 
     From PYPI
     ```shell
-    $ pip install acvtool==2.3.2
+    $ pip install acvtool==2.3.3
     ```
     Or from sources
     ```shell

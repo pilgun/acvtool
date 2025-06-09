@@ -36,7 +36,6 @@ def remove_not_executed_methods_and_classes(smalitree):
     '''Remove not executed methods and classes (for visualisation only).'''
     for cl in smalitree.classes[:]:
         if cl.covered() == 0:
-            print(cl.name)
             smalitree.classes.remove(cl)
         else:
             for m in cl.methods[:]:

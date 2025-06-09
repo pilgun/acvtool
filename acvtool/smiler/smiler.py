@@ -11,7 +11,6 @@ from .config import config
 from .granularity import Granularity
 from .entities.wd import WorkingDirectory
 from .instrumenting import acvpatcher
-from .instrumenting import apktool
 from .instrumenting.smali_instrumenter import Instrumenter
 from .instrumenting.utils import timeit
 from .instrumenting.utils import Utils
@@ -131,7 +130,11 @@ def grant_storage_permission(package):
 
 def activate(package):
     grant_storage_permission(package)
+    if adb.sd_dir_exists(package):
+        logging.info("sdcard dir already exists")
+        return
     adb.create_app_sdcard_dir(package)
+    logging.info("sdcard dir has been created")
 
 
 def start_instrumenting(package, release_thread=False, onstop=None, timeout=None):
@@ -285,22 +288,6 @@ def instrument_apk(apk_path, result_dir, dbg_start=None, dbg_end=None, installat
     return (wd.package, wd.instrumented_apk_path, wd.pickle_dir)
 
 
-def build_dir(apktool_dir, result_dir, signature=False, installation=False):
-    build_pkg_path = os.path.join(result_dir, "build_temp.apk")
-    apktool.build(apktool_dir, build_pkg_path)
-    package = get_apk_properties(build_pkg_path).package
-    result_apk_path = build_pkg_path
-    if signature:
-        result_apk_path = os.path.join(result_dir, "build_{0}.apk".format(package))
-        patch_align_sign(build_pkg_path, result_apk_path)
-        print('apk was built and signed: {0}'.format(result_apk_path))
-    else:
-        print('apk was built: {0}'.format(result_apk_path))
-    if installation:
-        install(result_apk_path)
-    return result_apk_path
-
-
 def get_path_to_insrumented_apk(apk_path, result_dir):
     apk_dir, apk_fname = os.path.split(apk_path)
     new_apk_fname = "{}_{}".format("instr", apk_fname)
@@ -338,7 +325,7 @@ def instrument_smali_code(input_smali_dirs, apkfile, pickle_dir, package, granul
             # this DEX surpassed the limit of fields + references due to acv instrumentation
             rearrange_dex(tree, pth, apkfile, len(classes_info))
         AcvReporter.save(apkfile.acv_classes_dir, tree_id, classes_info)
-        #https://stackoverflow.com/a/54960728/5268585
+        # https://stackoverflow.com/a/54960728/5268585
         # 16-bit uint can represent a maximum value of 65535, divided by 4, equals 16383.75.
         # Ltool/acv/AcvReporter1;,=0< getArray generates 19644 insns
         smali_instrumenter.save_pickle(pickle_dir)
@@ -399,34 +386,10 @@ def arrange_acv_dexes(acvtree, apkfile):
             fields_number_counter += len(cl.fields)
 
 
-def refresh_wd_no_smali(wd, apk_path):
-    '''We actually need app files except smali dirs.
-    The smali dirs to be recover from the smalitree.'''
-    logging.info("removing smali dirs")
-    if os.path.exists(wd.unpacked_apk):
-        shutil.rmtree(wd.unpacked_apk)
-    apktool.unpack(apk_path, wd.unpacked_apk)
-    dex_files = [file for file in os.listdir(wd.unpacked_apk) if file.endswith('.dex')]
-    for f in dex_files:
-        os.remove(os.path.join(wd.unpacked_apk, f))
-
-
 def patch_align_sign(instrumented_package_path, output_apk, dex_filepaths):
     shutil.copyfile(instrumented_package_path, output_apk)
     acvpatcher.patch_apk(output_apk, dex_filepaths)
     return
-    
-    
-    # previous implementation of zipalign/apksigner 
-def sign_align_apk(instrumented_package_path, output_apk):
-    aligned_apk_path = instrumented_package_path.replace('.apk', '_signed_tmp.apk')
-    align_cmd = '"{}" -f 4 "{}" "{}"'.format(config.zipalign, instrumented_package_path, aligned_apk_path)
-    terminal.request_pipe(align_cmd)
-
-    apksigner_cmd = '"{}" sign --ks "{}" --ks-pass pass:{} --out "{}" "{}"'\
-        .format(config.apksigner_path, config.keystore_path, config.keystore_password, output_apk, aligned_apk_path)
-    terminal.request_pipe(apksigner_cmd)
-    os.remove(aligned_apk_path)
 
 
 class apkinfo(object):

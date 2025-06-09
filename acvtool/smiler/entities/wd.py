@@ -79,7 +79,7 @@ class WorkingDirectory(object):
     def __get_pickles(self, dir_path):
         if not os.path.exists(dir_path):
             raise Exception("No such directory: {}".format(dir_path))
-        return {int(f.split("_")[1][:-7]): os.path.join(dir_path, f) for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))}
+        return {int(f.split("_")[-1][:-7]): os.path.join(dir_path, f) for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))}
 
     def get_pickles(self):
         return self.__get_pickles(self.pickle_dir)

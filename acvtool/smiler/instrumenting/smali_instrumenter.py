@@ -89,6 +89,9 @@ class Instrumenter(object):
         #temp_class = self.smalitree.classes[4]
         #print(temp_class.methods[2].insns[0].cover_code)
         for class_ in tree.classes:
+            if self.target_sm_cl and self.target_sm_cl == class_.name:
+                logging.info("- target class {}".format(class_.name))
+                logging.info("- target method {}".format(self.target_sm_mtd))
             code, cover_index, method_number, is_instrumented = self.classInstr.instrument_class(
                 tree.Id,
                 class_, 

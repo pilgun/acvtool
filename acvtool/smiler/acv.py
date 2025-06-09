@@ -1,12 +1,15 @@
 import os
 import logging
+from acvtool.smiler.instrumenting.smali_instrumenter import Instrumenter
+from acvtool.smiler.instrumenting.utils import Utils
+from acvtool.smiler.operations import binaries
 from . import smiler
 from .config import config
 from ..cutter import shrinker
 from .operations import coverage
-from .instrumenting import apktool
 from .entities.wd import WorkingDirectory
 from .reporting.reporter import Reporter
+from .instrumenting.apkil.smalitree import SmaliTree
 
 
 
@@ -113,7 +116,32 @@ def shrink(args):
     wd = WorkingDirectory(args.package_name, args.working_dir)
     smiler.refresh_wd_no_smali(wd, args.apk_path)
     shrinker.shrink_smali(wd, wd.get_covered_pickles())
-    apktool.build(wd.unpacked_apk, wd.instrumented_package_path)
+    raise Exception("Full app shrinking is not refactored yet!")
+    # todo: update wd with target dex files, baksmali.build
+    # apktool.build(wd.unpacked_apk, wd.instrumented_package_path)
     smiler.patch_align_sign(wd.instrumented_package_path, wd.short_apk_path)
     logging.info("shrinked apk was saved to {}".format(wd.short_apk_path))
+
+def smali(args):
+    '''Read the pickled smali tree, get the smali 
+    dir name, save the smali tree to the dir.'''
+    pickle_path = args.pickle_path if hasattr(args, 'pickle_path') and args.pickle_path else wd.get_covered_pickles()[0]
+    smali_tree = binaries.load_smalitree(pickle_path)
+    if isinstance(smali_tree, SmaliTree):
+        print("Loaded SmaliTree object from pickle.")
+        print(smali_tree.foldername)
+        logging.info("Unpacking smali classes to: {}".format(smali_tree.foldername))
+        if os.path.exists(smali_tree.foldername):
+            user_choice = input(f"Folder '{smali_tree.foldername}' exists. Overwrite (y/n)? ")
+            if user_choice.lower() in ["y", "yes"]:
+                Utils.recreate_dir(smali_tree.foldername)
+            else:
+                logging.info("Aborting operation!")
+                return
+        else:
+            os.makedirs(smali_tree.foldername)
+        smali_instrumenter = Instrumenter(smali_tree, "method", "package")
+        smali_instrumenter.save_instrumented_smalitree_by_class(smali_tree, 0, instrument=False)
+    else:
+        logging.error("Loaded object is not a SmaliTree instance.")
 

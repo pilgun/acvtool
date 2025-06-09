@@ -1,5 +1,6 @@
 import yaml
 import argparse
+import logging
 from logging import config as logging_config
 from .smiler import acv, cliparser
 from .smiler.cliparser import AcvCommandParsers
@@ -21,38 +22,34 @@ def run_actions(parser, args=None):
 
     if args is None:
         args = parser.parse_args()
-    if args.subcmd in ["instrument", "install", "uninstall", "activate", "start", "stop", "snap", "flush", "calculate", "pull", "cover-pickles", "report", "shrink"] and args.device:
+    if args.debug:
+        logging.info("Debug logging is on")
+        logging.getLogger().setLevel(logging.DEBUG)
+    command_map = {
+        "instrument": acv.instrument,
+        "install": acv.install,
+        "uninstall": acv.uninstall,
+        "activate": acv.activate,
+        "start": acv.start,
+        "stop": acv.stop,
+        "snap": acv.snap,
+        "flush": acv.flush,
+        "calculate": acv.calculate,
+        "pull": acv.pull,
+        "cover-pickles": acv.cover_pickles,
+        "report": acv.report,
+        "sign": acv.sign,
+        "build": acv.build,
+        "shrink": acv.shrink,
+        "smali": acv.smali,
+    }
+
+    if args.subcmd in command_map and getattr(args, "device", None):
         config.adb_path = "{} -s {}".format(config.adb_path, args.device)
-    if args.subcmd == "instrument":
-        acv.instrument(args)
-    elif args.subcmd == "install":
-        acv.install(args)
-    elif args.subcmd == "uninstall":
-        acv.uninstall(args)
-    elif args.subcmd == "activate":
-        acv.activate(args)
-    elif args.subcmd == "start":
-        acv.start(args)
-    elif args.subcmd == "stop":
-        acv.stop(args)
-    elif args.subcmd == "snap":
-        acv.snap(args)
-    elif args.subcmd == "flush":
-        acv.flush(args)
-    elif args.subcmd == "calculate":
-        acv.calculate(args)
-    elif args.subcmd == "pull":
-        acv.pull(args)
-    elif args.subcmd == "cover-pickles":
-        acv.cover_pickles(args)
-    elif args.subcmd == "report":
-        acv.report(args)
-    elif args.subcmd == "sign":
-        acv.sign(args)
-    elif args.subcmd == "build":
-        acv.build(args)
-    elif args.subcmd == "shrink":
-        acv.shrink(args)
+
+    func = command_map.get(args.subcmd)
+    if func:
+        func(args)
     else:
         parser.print_usage()
         return
@@ -62,6 +59,7 @@ def get_parser():
         description='This tool is designed to measure code coverage of \
         Android applications when its sources are not available.')
     parser.add_argument('--version', action='version', version=str(config.version))
+    parser.add_argument('--debug', help='Print verbose output', action='store_true')
     subparsers = parser.add_subparsers(dest='subcmd', metavar="<command>", 
         help="acvtool commands")
     cli_cmd = AcvCommandParsers(subparsers)
@@ -80,6 +78,7 @@ def get_parser():
     cli_cmd.sign()
     cli_cmd.build()
     cli_cmd.shrink()
+    cli_cmd.smali()
     return parser
 
 def main():
@@ -90,3 +89,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

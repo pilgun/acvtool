@@ -4,7 +4,6 @@ class Insn35c(object):
         self.buf = ""
         self.opcode_name = ""
         self.registers = []
-        self.method_descriptor = ""
 
         self.__parse(line)
 

@@ -1,3 +1,4 @@
+import os
 import logging
 from ..granularity import Granularity
 
@@ -108,9 +109,9 @@ class CoverageData(object):
         diff_cov = new_st_cov - st_cov
         logging.info("diff\tst {}: lines {}({}), methods {}({}), classes {}({}), coverage {}%".format(
             i, 
-            CoverageData.cred(diff_cov.lines_covered), st_cov.lines,
-            CoverageData.cred(diff_cov.methods_covered), st_cov.methods,
-            CoverageData.cred(diff_cov.classes_covered), st_cov.classes,
+            CoverageData.hred(diff_cov.lines_covered), st_cov.lines,
+            CoverageData.hred(diff_cov.methods_covered), st_cov.methods,
+            CoverageData.hred(diff_cov.classes_covered), st_cov.classes,
             100*(new_st_cov.get_line_coverage()-st_cov.get_line_coverage())
             )
         )
@@ -119,16 +120,18 @@ class CoverageData(object):
     @staticmethod
     def log_diff(diff):
         logging.info(" total diff: lines {}({}), methods {}({}), classes {}({}), coverage {}%".format(
-            CoverageData.cred(diff.lines_covered), diff.lines,
-            CoverageData.cred(diff.methods_covered), diff.methods,
-            CoverageData.cred(diff.classes_covered), diff.classes,
+            CoverageData.hred(diff.lines_covered), diff.lines,
+            CoverageData.hred(diff.methods_covered), diff.methods,
+            CoverageData.hred(diff.classes_covered), diff.classes,
             100*diff.get_line_coverage()
             )
         )
     
     @staticmethod
-    def cred(number):
+    def hred(number):
         '''Highlight with color red if non zero'''
+        if os.name=="nt":
+            return number
         if number == 0:
             return number
         return "\033[91m{}\033[0m".format(number)

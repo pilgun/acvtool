@@ -1,6 +1,8 @@
+import logging
 import subprocess
 
 def request_pipe(cmd):
+    logging.debug(f'> {cmd}')
     pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     out, err = pipe.communicate()
 

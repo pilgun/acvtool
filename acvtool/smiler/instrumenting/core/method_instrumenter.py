@@ -95,7 +95,10 @@ class MethodInstrumenter(object):
 
     def get_instrumented_insns_and_labels(self, method, reg_map, regs, cover_index, instrument=True):
         lines = []
-        block_move_insn = False
+        block_monitor_enter = False
+        block_move_result = False
+        block_move_exception = False
+        is_instrument_insn_lvl = instrument and Granularity.is_instruction(self.granularity)
         labels = method.labels.values()
         labels_search = LabelReversedLoopSearch(labels)
         # The last insn is always goto, return or throw. We dont track them.
@@ -106,7 +109,7 @@ class MethodInstrumenter(object):
                 labels, 
                 regs, 
                 cover_index,
-                instrument and Granularity.is_instruction(self.granularity))
+                is_instrument_insn_lvl)
             lines[0:0] = insns
         goto_hack_i = 0
         throw_safe_indexes = []
@@ -124,8 +127,8 @@ class MethodInstrumenter(object):
             # dont track 'return*'insns
             if insn.buf.startswith(".end packed-swi") or insn.buf.startswith(".end array"):
                 print("OPCODE NAME: " + insn.opcode_name)
-            if instrument and Granularity.is_instruction(self.granularity) and \
-                not block_move_insn and \
+            if is_instrument_insn_lvl and \
+                not (block_monitor_enter or block_move_result or block_move_exception) and \
                 not insn.buf.startswith('return') and \
                 not insn.buf.startswith('goto') and \
                 not insn.buf.startswith('throw') and \
@@ -139,21 +142,33 @@ class MethodInstrumenter(object):
                 insn.cover_code = cover_index
                 cover_index += 1
             lines.insert(0, line)
-            # set this flag if instruction before current should not be instrumented
-            block_move_insn = instrument and Granularity.is_instruction(self.granularity) and \
-                self.not_instr_regex.match(insn.buf) is not None
+            # 'block_' flag instructs to skip instrumenting of the instruction going above current because it will break the Verifier
+            block_move_result = is_instrument_insn_lvl and ((block_move_result and insn.opcode_name.startswith('.catch')) or insn.buf.startswith('move-result'))
+            block_move_exception = is_instrument_insn_lvl and insn.buf.startswith('move-exception')
+            ## Case: .catch instructions are placed inside the invoke-*/move-* block.
+            ## Example:
+            # :try_start_4c
+            # invoke-virtual {v0}, Landroid/telephony/TelephonyManager;->getDeviceId()Ljava/lang/String;
+            # :try_end_4f
+            # .catch Ljava/lang/Exception; {:try_start_4c .. :try_end_4f} :catch_5e
+            # .catch Lorg/json/JSONException; {:try_start_4c .. :try_end_4f} :catch_61
+            # move-result-object v0
+            ## invoke- / move-result- pair can include .catch/.catchall instructions and labels.
+            
             labels = labels_search.find_reversed_by_index(i)
             if labels:
+                is_block = block_monitor_enter or block_move_result or block_move_exception
                 safe_insns, throwable_insns, cover_index = MethodInstrumenter.get_throw_safe_instr_labels(
-                    labels, regs, cover_index, instrument and Granularity.is_instruction(self.granularity) and \
-                    not block_move_insn, goto_hack_i)
+                    labels, regs, cover_index, is_instrument_insn_lvl and \
+                    not is_block, goto_hack_i)
                 lines[0:0] = safe_insns
                 lines.extend(throwable_insns)
                 if len(throwable_insns) > 0:
                     goto_hack_i += 1
+            block_monitor_enter = False
             # :try_end_x goes immediatly after monitor-enter
-            if instrument and not block_move_insn and labels and method.insns[i-1].buf.startswith('monitor-enter') and any([any(l.tries) for l in labels]):
-                block_move_insn = True
+            if instrument and not (block_move_result or block_move_exception) and labels and method.insns[i-1].buf.startswith('monitor-enter') and any([any(l.tries) for l in labels]):
+                block_monitor_enter = True
             #prev_insn = ins
         #first tracking statement in the method
         if instrument:

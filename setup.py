@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='acvtool',
-    version='2.3.2',
+    version='2.3.3',
     author='Aleksandr Pilgun',
     author_email='alexand.pilgun@gmail.com',
     description="ACVTool is an instrumentation-based tool to measure and visualize instruction coverage for Android apps.",
@@ -22,11 +22,7 @@ setup(
         'PyYAML==6.0.1',
         'Chameleon==4.5.4',
         'javaobj-py3==0.4.4',
-        'six==1.12.0',
-        'androguard==4.0.2',
-        'pyaxml==0.0.5',
-        'typing_extensions==4.7.1',
-        'setuptools==70.0.0'
+        'setuptools==80.9.0'
     ],
     entry_points={
         'console_scripts': [

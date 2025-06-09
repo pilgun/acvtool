@@ -1,6 +1,6 @@
 version: 1
 root:
-  level: DEBUG
+  level: INFO
   handlers: [console, file]
 
 formatters:
@@ -11,7 +11,7 @@ formatters:
 
 handlers:
   console:
-    level: INFO
+    level: DEBUG
     class: logging.StreamHandler
     formatter: minimal
     stream: ext://sys.stdout

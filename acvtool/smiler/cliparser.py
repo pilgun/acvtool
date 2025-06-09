@@ -202,5 +202,8 @@ class AcvCommandParsers(object):
                 help="Package name")
         parser.add_argument("apk_path", metavar="<path_to_original_apk>", 
                 help="Path to apk file")
-        parser.add_argument("-d", "--device", metavar="<device>", required=False,
-                help="The name of adb device/emulator.", default=None, dest="device")
+
+    def smali(self):
+        parser = self.subparsers.add_parser("smali", help="Generates smali code from pickle files.")
+        parser.add_argument("pickle_path",
+                help="Path to pickle file")

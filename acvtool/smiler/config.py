@@ -10,7 +10,6 @@ from os.path import expanduser
 
 
 class config(object):
-
     dir_path = os.path.join(expanduser("~"), 'acvtool')
     if not os.path.exists(dir_path):
         logging.info('Creating acvtool directory in the user home directory')
@@ -22,10 +21,6 @@ class config(object):
     with open(config_path) as json_file:
         config_data = json.load(json_file)
 
-    APKTOOL_JAVA_PATH = "java" # it is possible that some tools will require different versions of java
-    APKTOOL_JAVA_OPTS = "-Xms512m -Xmx1024m"
-    APKTOOL_QUITE = "True"
-
     INSTRUMENTING_NAME = "tool.acv.AcvInstrumentation"
     
     instrumenting_class_dir_path = resource_filename('acvtool.smiler.resources.instrumentation', 'smali')
@@ -34,13 +29,11 @@ class config(object):
     keystore_path = resource_filename('acvtool.smiler', 'keystore')
     keystore_password = '123456'
     
-    apksigner_path = Path(config_data["APKSIGNER"])
     adb_path = Path(config_data["ADB"])
     aapt_path = Path(config_data["AAPT"])
-    zipalign = Path(config_data["ZIPALIGN"])
     acvpatcher = Path(config_data["ACVPATCHER"])
 
-    version = "2.3.2"
+    version = "2.3.3"
     logging_yaml = resource_filename('acvtool.smiler.resources', 'logging.yaml')
 
     default_working_dir = os.path.join(dir_path, "acvtool_working_dir")
@@ -64,21 +57,18 @@ class config(object):
     @staticmethod
     def check_tools():
         err = False
-        if not os.path.exists(config.apksigner_path):
-            err = True
-            logging.error("apksigner was not found at {}".format(config.apksigner_path))
         if not os.path.exists(config.adb_path):
             err = True
             logging.error("adb tool was not found at {}".format(config.adb_path))
         if not os.path.exists(config.aapt_path):
             err = True
             logging.error("aapt tool was not found at {}".format(config.aapt_path))
-        if not os.path.exists(config.zipalign):
-            err = True
-            logging.error("zipalign was not found at {}".format(config.zipalign))
         if not os.path.exists(config.acvpatcher):
             err = True
-            logging.error("acvpatcher was not found at {}".format(config.acvpatcher))
+            if config.acvpatcher == "acvpatcher":
+                logging.error("acvpatcher path is not set in the config.json")
+            else:
+                logging.error("acvpatcher was not found at {}".format(config.acvpatcher))
         if err:
             logging.error("\nCONFIGURATION ERROR: Please check paths at {} or/and install required software (consult README.md for details).\n".format(config.config_path))
             sys.exit()

@@ -39,7 +39,7 @@ class Reporter(object):
                 continue
             smalitree = binaries.load_smalitree(pickle_files[treeId])
             if to_shrink:
-                shrinker.shrink_smalitree(smalitree)
+                shrinker.remove_not_executed_methods_and_classes(smalitree)
             if ignore_filter:
                 smiler.apply_ignore_filter(smalitree, ignore_filter)
             if html:

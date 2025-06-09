@@ -55,6 +55,6 @@ class TypeNode(object):
             if self.void:
                 return ""
             else:
-                return constants.BASIC_TYPES[self.type_] + self.dim * "[]"
+                return BASIC_TYPES[self.type_] + self.dim * "[]"
         else:
             return self.type_[1:-1].replace('/', '.') + self.dim * "[]"

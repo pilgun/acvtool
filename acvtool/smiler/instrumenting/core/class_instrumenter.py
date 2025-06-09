@@ -15,7 +15,7 @@ class ClassInstrumenter:
 
 
     def instrument_class(self, treeId, smali_class, class_number, method_number=0, instrument=True, dbg_start=None, dbg_end=None):
-        # method_number is app through counter
+        # method_number is counting methods over all classes in the app
         class_lines = []
         cover_index = 0
         entry_lines = []
