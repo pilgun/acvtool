@@ -140,7 +140,7 @@ def smali(args):
                 return
         else:
             os.makedirs(smali_tree.foldername)
-        smali_instrumenter = Instrumenter(smali_tree, "method", "package")
+        smali_instrumenter = Instrumenter(smali_tree, "package")
         smali_instrumenter.save_instrumented_smalitree_by_class(smali_tree, 0, instrument=False)
     else:
         logging.error("Loaded object is not a SmaliTree instance.")

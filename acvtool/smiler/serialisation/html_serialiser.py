@@ -76,6 +76,8 @@ class HtmlSerialiser(object):
             f.write(htmlpage)
 
     def save_html(self, smalitree):
+        if smalitree.granularity == Granularity.METHOD:
+            self.granularity = Granularity.METHOD
         report_dir = os.path.join(self.output_dir, str(smalitree.Id))
         if not os.path.exists(report_dir):
             os.makedirs(report_dir)
@@ -157,6 +159,8 @@ class HtmlSerialiser(object):
                 html_method_line = Tag.span(html_method_line, Tag.IGNORE_TAG)
             elif m.called:
                 html_method_line = Tag.span(html_method_line, Tag.COV_CLASS)
+            else:
+                html_method_line = Tag.span(html_method_line, Tag.MISSED)
             ins_buf.insert(0, html_method_line)
             ins_buf.append(Tag.Li(".end method"))
             buf.append(Tag.Li(''))

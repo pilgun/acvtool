@@ -13,8 +13,8 @@
             <td>Element</td>
             <td>Ratio</td>
             <td>Cov.</td>
-            <td>Missed</td>
-            <td>Lines</td>
+            <td tal:condition="is_instruction_level">Missed</td>
+            <td tal:condition="is_instruction_level">Lines</td>
             <td>Missed</td>
             <td>Methods</td>
             <td>Missed</td>

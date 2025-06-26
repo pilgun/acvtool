@@ -7,7 +7,6 @@ from .apkil import constants
 from ..config import config
 from ..operations import binaries
 from .utils import Utils
-from ..granularity import Granularity
 from .core.method_instrumenter import MethodInstrumenter
 from .core.class_instrumenter import ClassInstrumenter
 
@@ -20,9 +19,9 @@ class Instrumenter(object):
     dir_path = sys.path[0]
     instrumentation_smali_path = config.get_resource('acvtool.smiler.resources.instrumentation', 'smali')
 
-    def __init__(self, smalitree, granularity, package, dbg_start=None, dbg_end=None, mem_stats=None, target_cl=None, target_mtd=None):
+    def __init__(self, smalitree, package, dbg_start=None, dbg_end=None, mem_stats=None, target_cl=None, target_mtd=None):
         self.smalitree = smalitree
-        self.granularity = Granularity.GRANULARITIES[granularity]
+        self.granularity = smalitree.granularity
         self.insns = []
         self.class_traces = []
         self.package = package

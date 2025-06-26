@@ -1,16 +1,18 @@
 import os
 import copy
+from ...granularity import Granularity
 from .classnode import ClassNode
 
 class SmaliTree(object):
 
-    def __init__(self, treeId, foldername):
+    def __init__(self, treeId, foldername, granularity="instruction"):
         self.foldername = ""
         self.classes = []
         self.class_ref_dict = None
         self.instrumented = False
         self.instrumented_method_number = None # go through method counter among all smali trees
         self.Id = treeId # smali dir number starting from 1
+        self.granularity = Granularity.GRANULARITIES[granularity]
 
         self.__parse(foldername)
 

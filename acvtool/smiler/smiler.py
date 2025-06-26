@@ -315,10 +315,10 @@ def apply_ignore_filter(smali_tree, ignore_filter):
 def instrument_smali_code(input_smali_dirs, apkfile, pickle_dir, package, granularity, dbg_start=None, dbg_end=None, mem_stats=None, ignore_filter=None, target_cl=None, target_mtd=None):
     first_dex_fields_number = 0
     for tree_id, pth in enumerate(input_smali_dirs, 1):
-        tree = SmaliTree(tree_id, pth)
+        tree = SmaliTree(tree_id, pth, granularity)
         if ignore_filter:
             apply_ignore_filter(tree, ignore_filter)
-        smali_instrumenter = Instrumenter(tree, granularity, package, dbg_start, dbg_end, mem_stats, target_cl, target_mtd)
+        smali_instrumenter = Instrumenter(tree, package, dbg_start, dbg_end, mem_stats, target_cl, target_mtd)
         classes_info = smali_instrumenter.save_instrumented_smalitrees()
         fields_number = sum([len(cl.fields) for cl in tree.classes])
         if fields_number + len(classes_info) > 65400: #65535

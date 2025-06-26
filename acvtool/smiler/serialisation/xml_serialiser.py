@@ -1,4 +1,3 @@
-import lxml
 from lxml import etree
 from lxml.etree import Element, SubElement
 from ..granularity import Granularity

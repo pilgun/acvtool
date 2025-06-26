@@ -30,17 +30,17 @@ def cover_pickles(wd):
         coverage.cover_tree(smalitree, bin_coverage)
         new_st_cov = get_coverage_data(smalitree)
         log_coverage("new", dex, new_st_cov.lines_covered, new_st_cov.lines, new_st_cov.get_line_coverage())
-        cov_diff = CoverageData.log_coverage_difference(dex, st_cov, new_st_cov)
+        cov_diff = CoverageData.log_coverage_difference(dex, st_cov, new_st_cov, smalitree.granularity)
         total_cov_diff.add_data(cov_diff, st_cov.lines, st_cov.methods, st_cov.classes)
         covered_pkl_pth = os.path.join(wd.covered_pickle_dir, os.path.basename(pkl_path))
         if cov_diff.lines_covered > 0 or not os.path.exists(covered_pkl_pth):
             binaries.save_pickle(smalitree, covered_pkl_pth)
-    CoverageData.log_diff(total_cov_diff)
+    CoverageData.log_diff(total_cov_diff, smalitree.granularity)
 
 
 def log_coverage(prefix, i, lines_covered, lines, coverage):
     logging.info("{}\tst {}: {} out of {}, {}%".format(
-        prefix, i, lines_covered, lines, 100*coverage)
+        prefix, i, lines_covered, lines, 100*coverage if coverage is not None else "N/A")
     )
 
 

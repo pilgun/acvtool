@@ -105,25 +105,37 @@ class CoverageData(object):
         return diff
 
     @staticmethod
-    def log_coverage_difference(i, st_cov, new_st_cov):
+    def log_coverage_difference(i, st_cov, new_st_cov, granularity):
         diff_cov = new_st_cov - st_cov
+        if Granularity.is_instruction(granularity):
+            covered = 100*(new_st_cov.get_line_coverage()-st_cov.get_line_coverage()) 
+        elif Granularity.is_method(granularity):
+            covered = 100*(new_st_cov.get_method_coverage()-st_cov.get_method_coverage())
+        else:
+            covered = 100*(new_st_cov.get_class_coverage()-st_cov.get_class_coverage())
         logging.info("diff\tst {}: lines {}({}), methods {}({}), classes {}({}), coverage {}%".format(
             i, 
             CoverageData.hred(diff_cov.lines_covered), st_cov.lines,
             CoverageData.hred(diff_cov.methods_covered), st_cov.methods,
             CoverageData.hred(diff_cov.classes_covered), st_cov.classes,
-            100*(new_st_cov.get_line_coverage()-st_cov.get_line_coverage())
+            covered
             )
         )
         return diff_cov
 
     @staticmethod
-    def log_diff(diff):
+    def log_diff(diff, granularity):
+        if Granularity.is_instruction(granularity):
+            covered = 100 * diff.get_line_coverage()
+        elif Granularity.is_method(granularity):
+            covered = 100 * diff.get_method_coverage()
+        else:
+            covered = 100 * diff.get_class_coverage()
         logging.info(" total diff: lines {}({}), methods {}({}), classes {}({}), coverage {}%".format(
             CoverageData.hred(diff.lines_covered), diff.lines,
             CoverageData.hred(diff.methods_covered), diff.methods,
             CoverageData.hred(diff.classes_covered), diff.classes,
-            100*diff.get_line_coverage()
+            covered
             )
         )
     
