@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='acvtool',
-    version='2.3.4',
+    version='2.3.5',
     author='Aleksandr Pilgun',
     author_email='alexand.pilgun@gmail.com',
     description="ACVTool is an instrumentation-based tool to measure and visualize instruction coverage for Android apps.",

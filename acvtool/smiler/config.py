@@ -38,7 +38,7 @@ class config(object):
     aapt_path = Path(config_data["AAPT"])
     acvpatcher = Path(config_data["ACVPATCHER"])
 
-    version = "2.3.4"
+    version = "2.3.5"
     logging_yaml = resources.path('acvtool.smiler.resources', 'logging.yaml')
 
     default_working_dir = os.path.join(dir_path, "acvtool_working_dir")
