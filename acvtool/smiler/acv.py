@@ -102,9 +102,14 @@ def cover_pickles(args):
 def report(args):
     wd = WorkingDirectory(args.package_name, args.working_dir)
     reporter = Reporter(args.package_name, wd.get_covered_pickles(), wd.images, wd.report)
-    reporter.generate(html=args.html, xml=args.xml, 
-        granularity=args.granularity, 
-        ignore_filter=args.stubs, shrink=args.shrink)
+    reporter.generate(
+        html=args.html,
+        xml=args.xml,
+        json=args.json,
+        granularity=args.granularity,
+        ignore_filter=args.stubs,
+        shrink=args.shrink
+    )
 
 def sign(args):
     smiler.patch_align_sign(args.apk_path, "{0}.signed.apk".format(args.apk_path))

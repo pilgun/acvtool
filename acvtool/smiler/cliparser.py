@@ -155,7 +155,7 @@ class AcvCommandParsers(object):
                 dest="throttle", help="Delay between snaps.", default=config.throttle)
 
     def report(self):
-        parser = self.subparsers.add_parser("report", help="Produces a report html/xml reports from covered code trees saved in 'covered_pickles' directory. Make sure to run 'cover-pickles' command.")
+        parser = self.subparsers.add_parser("report", help="Produces a report html/xml/json reports from covered code trees saved in 'covered_pickles' directory. Make sure to run 'cover-pickles' command.")
         parser.add_argument("package_name", metavar="<package_name>",
                 help="Package name")
         parser.add_argument("-d", "--device", metavar="<device>", required=False,
@@ -168,6 +168,8 @@ class AcvCommandParsers(object):
                 help="Generate XML report.")
         parser.add_argument("-html", "--html", action="store_true", default=True,
                 help="Generate HTML report.")
+        parser.add_argument("-json", "--json", action="store_true", default=False,
+                help="Generate JSON report.")
         parser.add_argument("-g", "--granularity", metavar="<granularity>", dest="granularity",
                 help="Code coverage granularity [instruction or method].", choices=Granularity.granularities(),
                 default=Granularity.default)

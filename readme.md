@@ -161,7 +161,7 @@ $ acv <command> <path> [-/--options]
 | snap         | package_name | Saves coverage data.                     | --wd                                 |
 | flush        | package_name | Flushes runtime coverage information.    |                                      |
 | calculate    | package_name | Logs current coverage into logcat.       |                                      |
-| report       | package_name | Produces a report.                       | --wd, --shrink                       |
+| report       | package_name | Produces a report.                       | --wd, --shrink, --json               |
 | sign         | apk_path     | Signs and alignes an apk.                |                                      |
 | shrink       | pkg, apk_pth | Generates shrunk code.                   | --wd                                 |
 
