@@ -32,7 +32,7 @@ CRASH_REPORT_FILENAME = "errors.txt"
 
 def install(new_apk_path):
     logging.info("installing {}".format(os.path.basename(new_apk_path)))
-    cmd = '"{}" install -r --no-incremental "{}"'.format(config.adb_path, new_apk_path)
+    cmd = '{} install -r --no-incremental "{}"'.format(config.adb_path, new_apk_path)
     out = terminal.request_pipe(cmd)
     
     logging.info(out)
@@ -56,7 +56,7 @@ def install_multiple(apks):
 
 def uninstall(package):
     logging.info("uninstalling")
-    cmd = '"{}"" uninstall "{}"'.format(config.adb_path, package)
+    cmd = '{} uninstall "{}"'.format(config.adb_path, package)
     out = terminal.request_pipe(cmd)
 
     logging.info(out)
@@ -67,7 +67,7 @@ def request_pipe(cmd):
 
 
 def get_apk_properties(path):
-    info_cmd = '"{}" dump badging "{}"'.format(config.aapt_path, path)
+    info_cmd = '{} dump badging "{}"'.format(config.aapt_path, path)
     out = terminal.request_pipe(info_cmd)
 
     matched = re.match(apk_info_pattern, out)
@@ -77,7 +77,7 @@ def get_apk_properties(path):
 
 
 def get_package_files_list(package_name):
-    cmd = '"{}" shell ls "/sdcard/Download/{}/"'.format(config.adb_path, package_name)
+    cmd = '{} shell ls "/sdcard/Download/{}/"'.format(config.adb_path, package_name)
     out = terminal.request_pipe(cmd)
     files = [f for f in out.split() if not f.endswith('/')]
     return files  
@@ -110,21 +110,21 @@ def pull_files(dir_name, file_list, package_name):
 
 
 def adb_pull(package_name, file_path, pull_to):
-    cmd = '"{}" pull "/sdcard/Download/{}/{}" "{}"'.format(config.adb_path, package_name, file_path, os.path.abspath(pull_to))
+    cmd = '{} pull "/sdcard/Download/{}/{}" "{}"'.format(config.adb_path, package_name, file_path, os.path.abspath(pull_to))
     out = terminal.request_pipe(cmd)
     logging.info(out)
 
 
 def adb_delete_files(package_name, file_name):
-    cmd = '"{}" shell rm "/sdcard/Download/{}/{}"'.format(config.adb_path, package_name, file_name)
+    cmd = '{} shell rm "/sdcard/Download/{}/{}"'.format(config.adb_path, package_name, file_name)
     out = terminal.request_pipe(cmd)
 
 
 def grant_storage_permission(package):
-    read_storage_cmd = '"{0}" shell pm grant "{1}" android.permission.READ_EXTERNAL_STORAGE'.format(config.adb_path, package)
+    read_storage_cmd = '{0} shell pm grant "{1}" android.permission.READ_EXTERNAL_STORAGE'.format(config.adb_path, package)
     subprocess.call(read_storage_cmd, shell=True)
 
-    write_storage_cmd = '"{0}" shell pm grant "{1}" android.permission.WRITE_EXTERNAL_STORAGE'.format(config.adb_path, package)
+    write_storage_cmd = '{0} shell pm grant "{1}" android.permission.WRITE_EXTERNAL_STORAGE'.format(config.adb_path, package)
     subprocess.call(write_storage_cmd, shell=True)
 
 
@@ -140,7 +140,7 @@ def activate(package):
 def start_instrumenting(package, release_thread=False, onstop=None, timeout=None):
     grant_storage_permission(package)
     lock_thread = "" if release_thread else "-w"
-    cmd = '"{}" shell am instrument "{}" "{}/{}"'.format(config.adb_path, lock_thread, package, config.INSTRUMENTING_NAME)
+    cmd = '{} shell am instrument "{}" "{}/{}"'.format(config.adb_path, lock_thread, package, config.INSTRUMENTING_NAME)
     if release_thread:
         os.system(cmd)
         locked = sdcard_path_exists(package) # dir is created, service started # to be change to another lock file on start
@@ -186,7 +186,7 @@ def coverage_is_locked(package_name):
 
 
 def stop_instrumenting(package_name, timeout=None):
-    cmd = '"{}" shell am broadcast -a "tool.acv.finishtesting" -p "{}"'.format(config.adb_path, package_name)
+    cmd = '{} shell am broadcast -a "tool.acv.finishtesting" -p "{}"'.format(config.adb_path, package_name)
     logging.info("finish testing")
     result = subprocess.call(cmd, shell=True)
     logging.info(result)
@@ -212,19 +212,19 @@ def stop_instrumenting(package_name, timeout=None):
 # refactor: to put this in a separate controller
 def flush(package_name):
     logging.info("flush")
-    cmd = '"{}" shell am broadcast -a "tool.acv.flush" -p "{}"'.format(config.adb_path, package_name)
+    cmd = '{} shell am broadcast -a "tool.acv.flush" -p "{}"'.format(config.adb_path, package_name)
     result = subprocess.call(cmd, shell=True)
 
 
 def calculate(package_name):
     logging.info('calculate (see for "ACV" tag in logcat)')
-    cmd = '"{}" shell am broadcast -a "tool.acv.calculate" -p "{}"'.format(config.adb_path, package_name)
+    cmd = '{} shell am broadcast -a "tool.acv.calculate" -p "{}"'.format(config.adb_path, package_name)
     result = subprocess.call(cmd, shell=True)
 
 
 def snap(package_name, i=0, output=None):
     logging.info("ec: {}".format(i))
-    snap_cmd = '"{}" shell am broadcast -a "tool.acv.snap" -p "{}"'.format(config.adb_path, package_name)
+    snap_cmd = '{} shell am broadcast -a "tool.acv.snap" -p "{}"'.format(config.adb_path, package_name)
     result = subprocess.call(snap_cmd, shell=True)
 
     if output:
@@ -307,8 +307,10 @@ def apply_ignore_filter(smali_tree, ignore_filter):
             if klass in smali_tree.class_ref_dict:
                 if len(parts) == 2 and parts[1] in smali_tree.class_ref_dict[klass].meth_ref_dict:
                     smali_tree.class_ref_dict[klass].meth_ref_dict[parts[1]].ignore = True
+                    logging.info("Ignoring method: {}->{}".format(klass, parts[1]))
                 else:
                     smali_tree.class_ref_dict[klass].ignore = True
+                    logging.info("Ignoring class: {}".format(klass))
 
 
 # -- MULTIDEX

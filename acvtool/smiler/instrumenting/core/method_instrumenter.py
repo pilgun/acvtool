@@ -144,7 +144,7 @@ class MethodInstrumenter(object):
             lines.insert(0, line)
             # 'block_' flag instructs to skip instrumenting of the instruction going above current because it will break the Verifier
             block_move_result = is_instrument_insn_lvl and ((block_move_result and insn.opcode_name.startswith('.catch')) or insn.buf.startswith('move-result'))
-            block_move_exception = is_instrument_insn_lvl and insn.buf.startswith('move-exception')
+            block_move_exception = is_instrument_insn_lvl and ((block_move_exception and insn.opcode_name.startswith('.catch')) or insn.buf.startswith('move-exception'))
             ## Case: .catch instructions are placed inside the invoke-*/move-* block.
             ## Example:
             # :try_start_4c

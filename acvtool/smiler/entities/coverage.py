@@ -21,7 +21,7 @@ class CoverageData(object):
     @staticmethod
     def coverage(covered, coverable):
         if coverable == 0:
-            return None
+            return 0.0
         return float(covered) / coverable
 
     def get_class_coverage(self):

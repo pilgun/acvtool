@@ -45,7 +45,7 @@ def run_actions(parser, args=None):
     }
 
     if args.subcmd in command_map and getattr(args, "device", None):
-        config.adb_path = "{} -s {}".format(config.adb_path, args.device)
+        config.adb_path = '"{}" -s {}'.format(config.adb_path, args.device)
 
     func = command_map.get(args.subcmd)
     if func:

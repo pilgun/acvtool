@@ -108,4 +108,6 @@ class ProbesCoverage(object):
         self.total = total
 
     def coverage(self):
+        if self.total == 0:
+            return 0.0
         return 100*float(self.covered)/self.total
