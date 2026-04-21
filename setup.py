@@ -23,7 +23,7 @@ setup(
         'Chameleon==4.6.0',
         'javaobj-py3==0.4.4',
         'setuptools<81',
-        'lxml==5.4.0',
+        'lxml==6.1.0',
     ],
     entry_points={
         'console_scripts': [
